@@ -5,129 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chaotic Dice Studios</title>
   <meta name="description" content="Chaotic Dice Studios — coming soon." />
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #050505;
-      --ink: #ffffff;
-      --muted: #888;
-      --accent: #cfcfcf;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: system-ui, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05), transparent 65%);
-      opacity: 0.35;
-      pointer-events: none;
-    }
-
-    .stage {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      animation: fadein 1.2s ease both;
-    }
-
-    .logo {
-      width: min(520px, 85vw);
-      filter: drop-shadow(0 0 12px rgba(255,255,255,0.06));
-      animation: breathe 6s ease-in-out infinite, flicker 8s infinite;
-    }
-
-    @keyframes breathe {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
-    }
-
-    @keyframes flicker {
-      0%, 100% { opacity: 0.95; }
-      92% { opacity: 0.9; }
-      95% { opacity: 0.85; }
-      97% { opacity: 0.92; }
-    }
-
-    .brand-sub {
-      font-size: clamp(0.73rem, 1.7vw, 0.88rem);
-      letter-spacing: 0.35em;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .rule {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      width: min(220px, 60vw);
-      opacity: 0.5;
-    }
-
-    .rule::before,
-    .rule::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent));
-    }
-
-    .rule::after {
-      background: linear-gradient(90deg, var(--accent), transparent);
-    }
-
-    .rule-gem {
-      width: 4px;
-      height: 4px;
-      background: var(--accent);
-      transform: rotate(45deg);
-      opacity: 0.7;
-    }
-
-    .coming-soon {
-      font-size: clamp(0.75rem, 2.5vw, 1rem);
-      font-weight: 700;
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      opacity: 0.6;
-    }
-
-    @keyframes fadein {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+  <nav>
+    <a href="./products/index.html">Products</a>
+    <a href="./resources/index.html">Free Resources</a>
+  </nav>
+
   <div class="stage">
-    <img src="logo.svg" alt="Chaotic Dice Studios" class="logo" />
-
-    <div class="brand-sub">
-      Indie Tabletop Wargaming
+    <div class="logo-wrap">
+      <img src="images/logo.svg" alt="Chaotic Dice Studios" />
     </div>
-
-    <div class="rule">
-      <div class="rule-gem"></div>
-    </div>
-
-    <div class="coming-soon">
-      Coming Soon
-    </div>
+    <div class="rule"><div class="rule-gem"></div></div>
+    <p class="coming-soon">Coming Soon</p>
   </div>
 
 </body>

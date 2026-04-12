@@ -1,0 +1,125 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0a0a0a;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, sans-serif;
+}
+
+/* ── Nav ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  padding: 1.25rem;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(6px);
+}
+
+nav a {
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+nav a:hover { color: #ffffff; }
+
+/* ── Stage ── */
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  animation: fadein 1s ease both;
+}
+
+.logo-wrap img {
+  width: min(560px, 85vw);
+  height: auto;
+  display: block;
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.logo-wrap a { display: block; }
+
+/* ── Sub-page heading ── */
+.page-title {
+  font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+  font-weight: 700;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+/* ── Rule ── */
+.rule {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: min(260px, 60vw);
+}
+
+.rule::before, .rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.2);
+}
+
+.rule::after {
+  background: rgba(255,255,255,0.2);
+}
+
+.rule-gem {
+  width: 5px;
+  height: 5px;
+  background: #ffffff;
+  transform: rotate(45deg);
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+/* ── Coming soon ── */
+.coming-soon {
+  font-size: clamp(0.75rem, 2.5vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* ── Back link ── */
+.back {
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  margin-top: 0.5rem;
+}
+
+.back:hover { color: #ffffff; }
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%       { transform: scale(1.03); opacity: 0.85; }
+}
+
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
