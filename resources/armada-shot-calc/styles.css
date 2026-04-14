@@ -1,0 +1,615 @@
+/* ================================================================
+   ARMADA SHOT CALC — styles.css
+   ================================================================
+   Design tokens are defined as CSS custom properties in :root.
+   Change a token here and it updates everywhere automatically.
+
+   Section index:
+     1. Reset
+     2. Design Tokens
+     3. App Shell
+     4. Header
+     5. Main Layout
+     6. Progress Bar
+     7. Card (shared base)
+     8. Slide Transitions
+     9. Question Card
+    10. Option Buttons
+    11. Result Card
+    12. Roll Display
+    13. Modifier Pill
+    14. Modifier Breakdown
+    15. Notes / Reminders
+    16. Restart Button (inside result card)
+    17. Navigation Row (Back / Reset)
+    18. Footer
+    19. Responsive — Tablet / Desktop
+    20. Utility
+================================================================ */
+
+
+/* ── 1. Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+button { font: inherit; cursor: pointer; }
+ul     { list-style: none; }
+
+
+/* ── 2. Design Tokens ─────────────────────────────────────── */
+:root {
+  /* --- Colour palette --- */
+  --color-bg-page:        #050e1c;   /* deepest background, also used for PWA theme */
+  --color-bg-gradient-1:  #0e2540;   /* radial highlight at top of .app */
+  --color-bg-gradient-2:  #02080f;   /* bottom of page gradient */
+  --color-bg-card:        #0c1d30;   /* card surface */
+  --color-border-card:    rgba(255, 255, 255, 0.08);
+  --color-border-subtle:  rgba(255, 255, 255, 0.05);
+
+  /* White scale — used for text and accents */
+  --color-white:          #ffffff;
+  --color-white-dim:      rgba(255, 255, 255, 0.55);
+  --color-white-faint:    rgba(255, 255, 255, 0.35);
+  --color-white-ghost:    rgba(255, 255, 255, 0.05);
+
+  /* Body text */
+  --color-text:           #c0d4e8;
+  --color-text-dim:       #4e6880;
+
+  /* Semantic colours — modifier badges and notes */
+  --color-positive:       #5db87a;   /* positive modifier */
+  --color-negative:       #c96060;   /* negative modifier / impossible */
+  --color-warning:        #d4813a;   /* amber warning */
+  --color-info:           #3d72a8;   /* indirect weapon note */
+
+  /* Semantic note text colours — foreground text inside each note variant */
+  --color-text-warn:      #c88040;
+  --color-text-danger:    #c08080;
+  --color-text-info:      #6fa0cc;
+
+  /* Semantic backgrounds */
+  --color-bg-positive:    rgba(93,  184, 122, 0.10);
+  --color-bg-negative:    rgba(201,  96,  96, 0.12);
+  --color-bg-warning:     rgba(212, 129,  58, 0.08);
+  --color-bg-info:        rgba(61,  114, 168, 0.07);
+
+  /* --- Typography --- */
+  --font-display:         'Permanent Marker', cursive;  /* app title only */
+  --font-ui:              'Cinzel', serif;               /* headings, labels, buttons */
+  --font-body:            'Spectral', Georgia, serif;    /* body copy, notes, descriptions */
+
+  /* Font size scale — from largest to smallest */
+  --font-size-question:         1.11rem;   /* question heading h2 */
+  --font-size-subtitle:         0.68rem;   /* app subtitle */
+  --font-size-label:            0.71rem;   /* progress label, result heading, nav buttons */
+  --font-size-label-sm:         0.66rem;   /* step label, section titles */
+  --font-size-value:            0.94rem;   /* modifier pill value, breakdown total */
+  --font-size-option:           0.92rem;   /* option label, breakdown row modifier */
+  --font-size-body:             0.89rem;   /* general body, notes, roll suffix, buttons */
+  --font-size-small:            0.83rem;   /* option desc, q-subtext */
+  --font-size-tiny:             0.73rem;   /* progress count, roll label, footer */
+  --font-size-roll:             5.06rem;   /* big roll number */
+  --font-size-roll-impossible:  3.06rem;   /* "—" when no hit is possible */
+
+  /* --- Spacing --- */
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-md:   14px;
+  --space-lg:   20px;
+  --space-xl:   26px;
+  --space-2xl:  32px;
+
+  /* --- Shape --- */
+  --radius-sm:  8px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-pill: 20px;
+
+  /* --- Motion --- */
+  --duration-out:  160ms;
+  --duration-in:   220ms;
+  --easing:        cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* ── 3. App Shell ─────────────────────────────────────────── */
+html, body {
+  height: 100%;
+  background: var(--color-bg-page);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(ellipse 90% 35% at 50% 0%, var(--color-bg-gradient-1) 0%, transparent 60%),
+    linear-gradient(180deg, var(--color-bg-page) 0%, var(--color-bg-gradient-2) 100%);
+  animation: appFadeIn 0.35s ease both;
+}
+
+@keyframes appFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+
+/* ── 4. Header ────────────────────────────────────────────── */
+.app-header {
+  text-align: center;
+  padding: 28px var(--space-lg) var(--space-lg);
+  border-bottom: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+}
+
+.header-ship-icon {
+  display: inline-block;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+}
+
+.header-ship-icon img {
+  width: 54px;
+  height: 54px;
+  display: block;
+}
+
+.app-title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-title);
+  color: var(--color-white);
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.12);
+}
+
+.app-subtitle {
+  font-family: var(--font-ui);
+  font-size: var(--font-size-subtitle);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin-top: 6px;
+}
+
+
+/* ── 5. Main Layout ───────────────────────────────────────── */
+.app-main {
+  flex: 1;
+  padding: 22px var(--space-md) var(--space-lg);
+  max-width: 560px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+
+/* ── 6. Progress Bar ──────────────────────────────────────── */
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 7px;
+}
+
+.progress-label {
+  font-family: var(--font-ui);
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white-dim);
+}
+
+.progress-count {
+  font-family: var(--font-body);
+  font-size: var(--font-size-tiny);
+  color: var(--color-text-dim);
+  font-style: italic;
+}
+
+.progress-track {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 2px;
+  transition: width 0.4s var(--easing);
+}
+
+
+/* ── 7. Card (shared base) ────────────────────────────────── */
+.card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 2px 24px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+
+/* ── 8. Slide Transitions ─────────────────────────────────── */
+#mainContent {
+  transition:
+    opacity   var(--duration-out) var(--easing),
+    transform var(--duration-out) var(--easing);
+}
+
+#mainContent.slide-out-left  { opacity: 0; transform: translateX(-28px); }
+#mainContent.slide-out-right { opacity: 0; transform: translateX(28px);  }
+#mainContent.slide-in-right  { animation: slideInRight var(--duration-in) var(--easing) both; }
+#mainContent.slide-in-left   { animation: slideInLeft  var(--duration-in) var(--easing) both; }
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+
+
+/* ── 9. Question Card ─────────────────────────────────────── */
+.question-card {
+  padding: var(--space-xl) var(--space-lg) 22px;
+}
+
+.q-step-label {
+  font-family: var(--font-ui);
+  font-size: var(--font-size-label-sm);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-white-faint);
+  margin-bottom: 10px;
+}
+
+.q-text {
+  font-family: var(--font-ui);
+  font-size: var(--font-size-question);
+  font-weight: 600;
+  color: var(--color-white);
+  line-height: 1.35;
+  margin-bottom: 5px;
+}
+
+.q-subtext {
+  font-family: var(--font-body);
+  font-size: var(--font-size-small);
+  color: var(--color-text-dim);
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+
+/* ── 10. Option Buttons ────────────────────────────────────── */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 56px;
+  padding: 13px 15px;
+  text-align: left;
+  background: var(--color-white-ghost);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-md);
+  transition: background 140ms ease, border-color 140ms ease, transform 80ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.option-btn:hover  { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.22); }
+.option-btn:active { transform: scale(0.985); background: rgba(255, 255, 255, 0.11); }
+
+.option-text-group { flex: 1; min-width: 0; }
+
+.option-label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--font-size-option);
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 2px;
+}
+
+.option-desc {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--font-size-small);
+  color: var(--color-text-dim);
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.option-badge {
+  flex-shrink: 0;
+  font-family: var(--font-ui);
+  font-size: var(--font-size-body);
+  font-weight: 700;
+  min-width: 38px;
+  text-align: center;
+  padding: 3px 7px;
+  border-radius: var(--radius-sm);
+}
+
+/* Badge colour variants — applied by JS based on modifier sign */
+.badge-pos  { color: var(--color-positive); background: var(--color-bg-positive); }
+.badge-neg  { color: var(--color-negative); background: var(--color-bg-negative); }
+.badge-zero { color: var(--color-text-dim); background: var(--color-white-ghost); }
+
+
+/* ── 11. Result Card ──────────────────────────────────────── */
+.result-card {
+  padding: var(--space-xl) var(--space-lg) 24px;
+}
+
+.result-heading {
+  font-family: var(--font-ui);
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-white-dim);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+
+/* ── 12. Roll Display ─────────────────────────────────────── */
+.roll-display {
+  text-align: center;
+  padding: 16px 0 var(--space-lg);
+  margin-bottom: var(--space-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.roll-label {
+  font-family: var(--font-body);
+  font-size: var(--font-size-tiny);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.roll-number {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.roll-number.possible   { font-size: var(--font-size-roll);            color: var(--color-white);    text-shadow: 0 0 40px rgba(255, 255, 255, 0.25); }
+.roll-number.impossible { font-size: var(--font-size-roll-impossible);  color: var(--color-negative); text-shadow: 0 0 24px rgba(201,  96,  96, 0.35); }
+
+.roll-suffix            { font-family: var(--font-body); font-size: var(--font-size-body); color: var(--color-text-dim); font-style: italic; }
+.roll-suffix.impossible { color: var(--color-negative); font-style: normal; }
+
+
+/* ── 13. Modifier Pill ────────────────────────────────────── */
+.modifier-pill-wrap {
+  text-align: center;
+  margin-top: -4px;
+  margin-bottom: var(--space-xs);
+}
+
+.modifier-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--radius-pill);
+  padding: var(--space-xs) var(--space-md);
+  margin-top: var(--space-sm);
+  font-size: var(--font-size-body);
+}
+
+.pill-label { font-family: var(--font-body); color: var(--color-text-dim); font-style: italic; }
+.pill-value { font-family: var(--font-ui); font-size: var(--font-size-value); font-weight: 700; }
+
+/* Modifier colour variants — applied by JS based on modifier sign */
+.mod-pos  { color: var(--color-positive); }
+.mod-neg  { color: var(--color-negative); }
+.mod-zero { color: var(--color-text-dim); }
+
+
+/* ── 14. Modifier Breakdown ───────────────────────────────── */
+.breakdown-section { margin-bottom: 18px; }
+
+.section-title {
+  font-family: var(--font-ui);
+  font-size: var(--font-size-label-sm);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin-bottom: var(--space-sm);
+}
+
+.breakdown-list { display: flex; flex-direction: column; gap: 5px; }
+
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: var(--color-white-ghost);
+  border-radius: var(--radius-sm);
+}
+
+.breakdown-row-label { font-family: var(--font-body); font-size: var(--font-size-body); color: var(--color-text); }
+.breakdown-row-mod   { font-family: var(--font-ui); font-size: var(--font-size-option); font-weight: 700; }
+
+.breakdown-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  margin-top: 3px;
+}
+
+.breakdown-total-row .total-label { font-family: var(--font-body); font-size: var(--font-size-body); color: var(--color-text-dim); font-style: italic; }
+.breakdown-total-row .total-value { font-family: var(--font-ui); font-size: var(--font-size-value); font-weight: 700; }
+
+.no-modifiers { font-family: var(--font-body); font-size: var(--font-size-body); color: var(--color-text-dim); font-style: italic; padding: 6px 10px; }
+
+
+/* ── 15. Notes / Reminders ────────────────────────────────── */
+.notes-section { display: flex; flex-direction: column; gap: var(--space-sm); margin-bottom: 22px; }
+
+.note {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: 1.55;
+  padding: 9px 12px;
+  border-radius: 0 7px 7px 0;
+  border-left: 2px solid;
+}
+
+/* Note colour variants */
+.note-white  { border-color: rgba(255, 255, 255, 0.2); color: var(--color-text-dim);   background: rgba(255, 255, 255, 0.035); }
+.note-warn   { border-color: var(--color-warning);      color: var(--color-text-warn);  background: var(--color-bg-warning);    }
+.note-danger { border-color: var(--color-negative);     color: var(--color-text-danger); background: var(--color-bg-negative);  }
+.note-info   { border-color: var(--color-info);         color: var(--color-text-info);  background: var(--color-bg-info);       }
+
+.note strong { font-style: normal; font-weight: 600; color: var(--color-text); }
+
+
+/* ── 16. Restart Button (inside result card) ──────────────── */
+.btn-restart {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  color: var(--color-bg-page);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-family: var(--font-ui);
+  font-size: var(--font-size-body);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 150ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-restart:hover  { background: var(--color-white); box-shadow: 0 4px 20px rgba(255, 255, 255, 0.18); }
+.btn-restart:active { transform: scale(0.98); }
+
+
+/* ── 17. Navigation Row (Back / Reset) ────────────────────── */
+.nav-row {
+  flex-shrink: 0;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Back and Reset share the same ghost-button style */
+.btn-nav {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: var(--color-text-dim);
+  padding: var(--space-sm) 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  transition: all 140ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-nav:hover  { color: var(--color-white); border-color: rgba(255, 255, 255, 0.22); }
+.btn-nav:active { transform: scale(0.97); }
+
+
+/* ── 18. Footer ───────────────────────────────────────────── */
+.app-footer {
+  text-align: center;
+  padding: var(--space-lg) 16px 28px;
+  border-top: 1px solid var(--color-border-subtle);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-logo-link {
+  display: inline-block;
+  opacity: 0.45;
+  transition: opacity 150ms ease;
+}
+
+.footer-logo-link:hover { opacity: 0.8; }
+
+.footer-logo-link img {
+  width: 140px;
+  height: auto;
+  display: block;
+}
+
+.footer-disclaimer {
+  font-family: var(--font-body);
+  font-size: var(--font-size-tiny);
+  color: var(--color-text-dim);
+  line-height: 1.75;
+}
+
+
+/* ── 20. Responsive — Tablet / Desktop ───────────────────── */
+/*
+ * Rather than overriding individual selectors, we override the tokens
+ * themselves. Every component that uses these tokens automatically
+ * scales — no duplicated selector rules needed.
+ */
+@media (min-width: 480px) {
+  :root {
+    --font-size-title:    2.2rem;
+    --font-size-question: 1.15rem;
+    --font-size-roll:     6rem;
+  }
+  .app-main               { padding: 28px var(--space-lg) 24px; }
+  .question-card,
+  .result-card            { padding: var(--space-2xl) 28px 28px; }
+  .option-btn             { padding: var(--space-md) 18px; }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --font-size-title: 2.6rem;
+  }
+  .app-header             { padding: 36px var(--space-lg) 26px; }
+  .header-ship-icon svg   { width: 66px; height: 66px; }
+  .footer-logo-link img   { width: 170px; }
+}
+
+
+/* ── 20. Utility ──────────────────────────────────────────── */
+.hidden { display: none !important; }

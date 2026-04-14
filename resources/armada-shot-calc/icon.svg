@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0a1628" rx="96"/>
+
+  <!-- Subtle ocean shimmer at bottom -->
+  <path d="M0 390 Q128 370 256 390 Q384 410 512 390 L512 512 L0 512 Z" fill="#0d1e38" opacity="0.6"/>
+
+  <!-- ── Hull ──────────────────────────────────────────── -->
+  <!-- Lower hull (rounded belly) -->
+  <path d="M90 340 Q256 365 422 340 L408 382 Q256 408 104 382 Z" fill="#c9a84c"/>
+  <!-- Gunwale / upper deck band -->
+  <rect x="96" y="318" width="320" height="24" rx="4" fill="#a07030"/>
+  <!-- Gun ports suggestion (decorative row) -->
+  <g fill="#0a1628" opacity="0.55">
+    <rect x="130" y="323" width="14" height="10" rx="2"/>
+    <rect x="162" y="323" width="14" height="10" rx="2"/>
+    <rect x="194" y="323" width="14" height="10" rx="2"/>
+    <rect x="226" y="323" width="14" height="10" rx="2"/>
+    <rect x="258" y="323" width="14" height="10" rx="2"/>
+    <rect x="290" y="323" width="14" height="10" rx="2"/>
+    <rect x="322" y="323" width="14" height="10" rx="2"/>
+    <rect x="354" y="323" width="14" height="10" rx="2"/>
+  </g>
+
+  <!-- ── Bowsprit ──────────────────────────────────────── -->
+  <line x1="106" y1="308" x2="32" y2="218" stroke="#c9a84c" stroke-width="9" stroke-linecap="round"/>
+  <!-- Jib sail -->
+  <polygon points="108,308 32,218 100,264" fill="#d4b060" opacity="0.72"/>
+
+  <!-- ── Foremast (x≈162) ──────────────────────────────── -->
+  <rect x="157" y="128" width="9" height="190" rx="3" fill="#c9a84c"/>
+  <!-- Fore topsail -->
+  <polygon points="161,132 198,170 124,170" fill="#d4b060" opacity="0.88"/>
+  <!-- Fore main sail -->
+  <polygon points="161,175 200,222 122,222" fill="#c9a84c" opacity="0.80"/>
+  <!-- Fore lower sail -->
+  <polygon points="161,227 200,278 122,278" fill="#a07030" opacity="0.75"/>
+
+  <!-- ── Main mast (x≈256, tallest) ───────────────────── -->
+  <rect x="250" y="80" width="10" height="240" rx="3" fill="#c9a84c"/>
+  <!-- Main royal -->
+  <polygon points="255,84 300,128 210,128" fill="#e4c068" opacity="0.95"/>
+  <!-- Main topsail -->
+  <polygon points="255,133 304,182 206,182" fill="#d4b060" opacity="0.88"/>
+  <!-- Main sail -->
+  <polygon points="255,187 304,246 206,246" fill="#c9a84c" opacity="0.80"/>
+  <!-- Main lower sail -->
+  <polygon points="255,251 302,308 208,308" fill="#a07030" opacity="0.72"/>
+
+  <!-- ── Mizzenmast (x≈350) ────────────────────────────── -->
+  <rect x="345" y="150" width="9" height="168" rx="3" fill="#c9a84c"/>
+  <!-- Mizzen topsail -->
+  <polygon points="349,154 384,192 314,192" fill="#d4b060" opacity="0.88"/>
+  <!-- Mizzen sail -->
+  <polygon points="349,197 382,242 316,242" fill="#c9a84c" opacity="0.80"/>
+  <!-- Mizzen lower -->
+  <polygon points="349,247 382,295 316,295" fill="#a07030" opacity="0.72"/>
+
+  <!-- ── Flag ──────────────────────────────────────────── -->
+  <polygon points="250,80 282,90 250,100" fill="#8b1a1a"/>
+  <polygon points="250,100 278,108 250,116" fill="#8b1a1a" opacity="0.6"/>
+
+  <!-- ── Anchor chain (decorative) ───────────────────── -->
+  <circle cx="112" cy="360" r="6" fill="none" stroke="#8b6914" stroke-width="3"/>
+  <circle cx="92" cy="356" r="4" fill="none" stroke="#8b6914" stroke-width="2.5"/>
+
+  <!-- ── Waterline waves ───────────────────────────────── -->
+  <path d="M55 398 Q150 378 256 396 Q362 414 458 396" stroke="#1e4878" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M40 418 Q148 396 256 414 Q368 432 472 416" stroke="#1a3e6a" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+</svg>

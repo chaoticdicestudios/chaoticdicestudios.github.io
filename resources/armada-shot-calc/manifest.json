@@ -4,8 +4,8 @@
   "description": "Mantic Armada shooting modifier calculator — a free community tool by Chaotic Dice Studios.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0a1628",
-  "theme_color": "#0a1628",
+  "background_color": "#050e1c",
+  "theme_color": "#050e1c",
   "orientation": "portrait-primary",
   "categories": ["games", "utilities"],
   "icons": [
@@ -13,7 +13,13 @@
       "src": "icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ]
 }
