@@ -24,8 +24,143 @@
     </a>
     <div class="rule"><div class="rule-gem"></div></div>
     <p class="page-title">Free Resources</p>
-    <p class="coming-soon">Coming Soon</p>
+
+    <!-- ── Tools grid ─────────────────────────────────────── -->
+    <div class="tools-grid">
+
+      <a class="tool-card" href="armada-shot-calc/">
+        <!-- Ship icon -->
+        <div class="tool-card__icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="48" height="48">
+            <path d="M90 340 Q256 365 422 340 L408 382 Q256 408 104 382 Z" fill="currentColor" opacity="0.9"/>
+            <rect x="96" y="318" width="320" height="24" rx="4" fill="currentColor" opacity="0.65"/>
+            <line x1="106" y1="308" x2="32" y2="218" stroke="currentColor" stroke-width="9" stroke-linecap="round" opacity="0.75"/>
+            <rect x="157" y="128" width="9" height="190" rx="3" fill="currentColor" opacity="0.8"/>
+            <polygon points="161,132 198,170 124,170" fill="currentColor" opacity="0.72"/>
+            <polygon points="161,175 200,222 122,222" fill="currentColor" opacity="0.58"/>
+            <rect x="250" y="80" width="10" height="240" rx="3" fill="currentColor" opacity="0.9"/>
+            <polygon points="255,84 300,128 210,128" fill="currentColor" opacity="0.9"/>
+            <polygon points="255,133 304,182 206,182" fill="currentColor" opacity="0.72"/>
+            <polygon points="255,187 304,246 206,246" fill="currentColor" opacity="0.58"/>
+            <rect x="345" y="150" width="9" height="168" rx="3" fill="currentColor" opacity="0.8"/>
+            <polygon points="349,154 384,192 314,192" fill="currentColor" opacity="0.72"/>
+          </svg>
+        </div>
+        <div class="tool-card__body">
+          <p class="tool-card__game">Mantic Armada</p>
+          <h2 class="tool-card__title">Armada Shot Calc</h2>
+          <p class="tool-card__desc">Step-by-step shooting modifier calculator. Determine the minimum die roll needed to hit enemy ships!</p>
+          <span class="tool-card__badge">Free Web App</span>
+        </div>
+      </a>
+
+      <!-- Placeholder card — delete or duplicate when adding more tools -->
+      <!--
+      <a class="tool-card tool-card--coming-soon" href="#" tabindex="-1" aria-hidden="true">
+        <div class="tool-card__body">
+          <p class="tool-card__game">Your Game Here</p>
+          <h2 class="tool-card__title">Tool Name</h2>
+          <p class="tool-card__desc">Coming soon.</p>
+          <span class="tool-card__badge tool-card__badge--soon">Coming Soon</span>
+        </div>
+      </a>
+      -->
+
+    </div><!-- /.tools-grid -->
+
   </main>
+
+  <style>
+    /*
+     * Scoped styles for the tools grid.
+     * These sit below your existing style.css rules so they inherit
+     * whatever variables / base styles you already have.
+     * Move them into style.css once you're happy with them.
+     */
+
+    .tools-grid {
+      width: 100%;
+      max-width: 720px;
+      margin: 2rem auto 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      padding: 0 1rem;
+    }
+
+    .tool-card {
+      display: flex;
+      flex-direction: column;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 1.4rem 1.2rem;
+      text-decoration: none;
+      color: inherit;
+      transition: background 150ms ease, border-color 150ms ease, transform 100ms ease;
+    }
+
+    .tool-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    .tool-card:active {
+      transform: scale(0.99);
+    }
+
+    .tool-card__icon {
+      color: #ffffff;
+      margin-bottom: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .tool-card__game {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.45;
+      margin-bottom: 0.25rem;
+    }
+
+    .tool-card__title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .tool-card__desc {
+      font-size: 0.83rem;
+      opacity: 0.6;
+      line-height: 1.55;
+      flex: 1;
+      margin-bottom: 1rem;
+    }
+
+    .tool-card__badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 20px;
+      background: rgba(93,184,122,0.15);
+      color: #5db87a;
+      border: 1px solid rgba(93,184,122,0.25);
+    }
+
+    .tool-card__badge--soon {
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.35);
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    .tool-card--coming-soon {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  </style>
 
 </body>
 </html>

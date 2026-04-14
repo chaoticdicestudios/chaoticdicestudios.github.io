@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Armada Shot Calc</title>
+  <meta name="description" content="Mantic Armada shooting modifier calculator. A free community tool by Chaotic Dice Studios." />
+
+  <!-- PWA / Installability -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#050e1c" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Shot Calc" />
+  <!--
+    iOS home screen icon: convert icon.svg to a 180×180 PNG and update this path.
+    Android Chrome uses the SVG defined in manifest.json directly.
+  -->
+  <link rel="apple-touch-icon" href="icon.svg" />
+
+  <!-- Fonts: Permanent Marker matches the CDS brand; Spectral for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Spectral:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    button { font: inherit; cursor: pointer; }
+    ul     { list-style: none; }
+
+    /* ═══════════════════════════════════════════════════════════
+       DESIGN TOKENS
+       Navy background + white accent palette — matching CDS brand
+    ═══════════════════════════════════════════════════════════ */
+    :root {
+      --navy-deep:     #050e1c;
+      --navy:          #091624;
+      --navy-card:     #0c1d30;
+      --navy-border:   rgba(255,255,255,0.08);
+      --white:         #ffffff;
+      --white-dim:     rgba(255,255,255,0.55);
+      --white-faint:   rgba(255,255,255,0.15);
+      --white-ghost:   rgba(255,255,255,0.05);
+      --text:          #c0d4e8;
+      --text-dim:      #4e6880;
+      --green:         #5db87a;
+      --red:           #c96060;
+      --amber:         #d4813a;
+      --danger-bg:     rgba(201,96,96,0.12);
+      --radius:        10px;
+      --radius-lg:     16px;
+      --speed-out:     160ms;
+      --speed-in:      220ms;
+      --ease:          cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       APP SHELL
+    ═══════════════════════════════════════════════════════════ */
+    html, body {
+      height: 100%;
+      background: var(--navy-deep);
+      color: var(--text);
+      font-family: 'Spectral', Georgia, serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background:
+        radial-gradient(ellipse 90% 35% at 50% 0%, #0e2540 0%, transparent 60%),
+        linear-gradient(180deg, #050e1c 0%, #02080f 100%);
+      animation: appFadeIn 0.35s ease both;
+    }
+
+    @keyframes appFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════════════════════════ */
+    .app-header {
+      text-align: center;
+      padding: 28px 20px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      flex-shrink: 0;
+    }
+
+    .header-ship-icon {
+      display: inline-block;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 0 12px rgba(255,255,255,0.15));
+    }
+
+    .header-ship-icon svg {
+      width: 54px;
+      height: 54px;
+      display: block;
+    }
+
+    /* Permanent Marker matches the CDS logo font */
+    .app-title {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.8rem;
+      color: var(--white);
+      letter-spacing: 0.01em;
+      line-height: 1.1;
+      text-shadow: 0 0 30px rgba(255,255,255,0.12);
+    }
+
+    .app-subtitle {
+      font-size: 0.67rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       MAIN
+    ═══════════════════════════════════════════════════════════ */
+    .app-main {
+      flex: 1;
+      padding: 22px 14px 20px;
+      max-width: 560px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       PROGRESS BAR
+    ═══════════════════════════════════════════════════════════ */
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 7px;
+    }
+
+    .progress-label {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      color: var(--white-dim);
+    }
+
+    .progress-count {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    .progress-track {
+      height: 2px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: rgba(255,255,255,0.65);
+      border-radius: 2px;
+      transition: width 0.4s var(--ease);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CARD (shared base)
+    ═══════════════════════════════════════════════════════════ */
+    .card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius-lg);
+      box-shadow:
+        0 2px 24px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+
+    /* ── Slide transitions ───────────────────────────────── */
+    #mainContent {
+      transition:
+        opacity   var(--speed-out) var(--ease),
+        transform var(--speed-out) var(--ease);
+    }
+
+    #mainContent.slide-out-left  { opacity: 0; transform: translateX(-28px); }
+    #mainContent.slide-out-right { opacity: 0; transform: translateX(28px);  }
+    #mainContent.slide-in-right  { animation: slideInRight var(--speed-in) var(--ease) both; }
+    #mainContent.slide-in-left   { animation: slideInLeft  var(--speed-in) var(--ease) both; }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(28px); }
+      to   { opacity: 1; transform: translateX(0);    }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-28px); }
+      to   { opacity: 1; transform: translateX(0);     }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       QUESTION CARD
+    ═══════════════════════════════════════════════════════════ */
+    .question-card { padding: 26px 20px 22px; }
+
+    .q-step-label {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 0.63rem;
+      letter-spacing: 0.06em;
+      color: var(--white-faint);
+      margin-bottom: 10px;
+    }
+
+    .q-text {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.05rem;
+      color: var(--white);
+      line-height: 1.35;
+      margin-bottom: 5px;
+    }
+
+    .q-subtext {
+      font-size: 0.81rem;
+      color: var(--text-dim);
+      font-style: italic;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    /* ── Option buttons ──────────────────────────────────── */
+    .options-list { display: flex; flex-direction: column; gap: 9px; }
+
+    .option-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+      background: var(--white-ghost);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      padding: 13px 15px;
+      text-align: left;
+      min-height: 56px;
+      transition: background 140ms ease, border-color 140ms ease, transform 80ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .option-btn:hover  { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.22); }
+    .option-btn:active { transform: scale(0.985); background: rgba(255,255,255,0.11); }
+
+    .option-text-group { flex: 1; min-width: 0; }
+
+    .option-label {
+      display: block;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 0.88rem;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+
+    .option-desc {
+      display: block;
+      font-size: 0.77rem;
+      color: var(--text-dim);
+      font-style: italic;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .option-badge {
+      flex-shrink: 0;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 0.9rem;
+      min-width: 38px;
+      text-align: center;
+      padding: 3px 7px;
+      border-radius: 6px;
+    }
+
+    .badge-pos  { color: var(--green); background: rgba(93,184,122,0.1);  }
+    .badge-neg  { color: var(--red);   background: rgba(201,96,96,0.1);   }
+    .badge-zero { color: var(--text-dim); background: var(--white-ghost); }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESULT CARD
+    ═══════════════════════════════════════════════════════════ */
+    .result-card { padding: 26px 20px 24px; }
+
+    .result-heading {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* ── Big roll display ────────────────────────────────── */
+    .roll-display {
+      text-align: center;
+      padding: 16px 0 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .roll-label {
+      font-size: 0.67rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-style: italic;
+      margin-bottom: 5px;
+    }
+
+    .roll-number { font-family: 'Permanent Marker', cursive; line-height: 1; margin-bottom: 5px; }
+    .roll-number.possible   { font-size: 5rem; color: var(--white); text-shadow: 0 0 40px rgba(255,255,255,0.25); }
+    .roll-number.impossible { font-size: 3rem; color: var(--red);   text-shadow: 0 0 24px rgba(201,96,96,0.35);   }
+
+    .roll-suffix            { font-size: 0.84rem; color: var(--text-dim); font-style: italic; }
+    .roll-suffix.impossible { color: var(--red); font-style: normal; }
+
+    /* ── Modifier pill ───────────────────────────────────── */
+    .modifier-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 20px;
+      padding: 4px 14px;
+      margin-top: 8px;
+      font-size: 0.8rem;
+    }
+
+    .modifier-pill .pill-label { color: var(--text-dim); font-style: italic; }
+    .modifier-pill .pill-value { font-family: 'Permanent Marker', cursive; font-size: 0.9rem; }
+    .pill-pos  { color: var(--green); }
+    .pill-neg  { color: var(--red);   }
+    .pill-zero { color: var(--text-dim); }
+
+    /* ── Modifier breakdown ──────────────────────────────── */
+    .breakdown-section { margin-bottom: 18px; }
+
+    .section-title {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+
+    .breakdown-list { display: flex; flex-direction: column; gap: 5px; }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.83rem;
+      padding: 6px 10px;
+      background: var(--white-ghost);
+      border-radius: 7px;
+    }
+
+    .breakdown-row-label { color: var(--text); }
+    .breakdown-row-mod   { font-family: 'Permanent Marker', cursive; font-size: 0.9rem; }
+    .mod-pos  { color: var(--green); }
+    .mod-neg  { color: var(--red);   }
+
+    .breakdown-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.84rem;
+      padding: 8px 10px 0;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      margin-top: 3px;
+    }
+
+    .breakdown-total-row span:first-child { color: var(--text-dim); font-style: italic; }
+    .breakdown-total-row span:last-child  { font-family: 'Permanent Marker', cursive; font-size: 0.9rem; }
+
+    .no-modifiers { font-size: 0.82rem; color: var(--text-dim); font-style: italic; padding: 6px 10px; }
+
+    /* ── Notes / reminders ───────────────────────────────── */
+    .notes-section { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+
+    .note {
+      font-size: 0.81rem;
+      line-height: 1.55;
+      padding: 9px 12px;
+      border-radius: 0 7px 7px 0;
+      border-left: 2px solid;
+    }
+
+    .note-white  { border-color: rgba(255,255,255,0.2); color: var(--text-dim); background: rgba(255,255,255,0.035); }
+    .note-warn   { border-color: var(--amber);           color: #c88040;        background: rgba(212,129,58,0.08);    }
+    .note-danger { border-color: var(--red);              color: #c08080;        background: var(--danger-bg);         }
+    .note-info   { border-color: #3d72a8;                 color: #6fa0cc;        background: rgba(61,114,168,0.07);    }
+
+    .note strong { font-style: normal; font-weight: 600; color: var(--text); }
+
+    /* ── Restart button ──────────────────────────────────── */
+    .btn-restart {
+      width: 100%;
+      background: rgba(255,255,255,0.9);
+      border: none;
+      color: var(--navy-deep);
+      padding: 14px 20px;
+      border-radius: var(--radius);
+      font-family: 'Permanent Marker', cursive;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      transition: all 150ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-restart:hover  { background: var(--white); box-shadow: 0 4px 20px rgba(255,255,255,0.18); }
+    .btn-restart:active { transform: scale(0.98); }
+
+    /* ═══════════════════════════════════════════════════════════
+       BACK BUTTON ROW
+    ═══════════════════════════════════════════════════════════ */
+    .nav-row { flex-shrink: 0; min-height: 38px; display: flex; align-items: center; }
+
+    .btn-back {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.09);
+      color: var(--text-dim);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 0.7rem;
+      letter-spacing: 0.03em;
+      transition: all 140ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-back:hover  { color: var(--white); border-color: rgba(255,255,255,0.22); }
+    .btn-back:active { transform: scale(0.97); }
+
+    /* ═══════════════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════════════ */
+    .app-footer {
+      text-align: center;
+      padding: 20px 16px 28px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* CDS logo — links back to the main site */
+    .footer-logo-link {
+      display: inline-block;
+      opacity: 0.45;
+      transition: opacity 150ms ease;
+    }
+
+    .footer-logo-link:hover { opacity: 0.8; }
+
+    .footer-logo-link img {
+      width: 140px;
+      height: auto;
+      display: block;
+    }
+
+    .footer-disclaimer {
+      font-size: 0.67rem;
+      color: var(--text-dim);
+      line-height: 1.75;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESPONSIVE — TABLET / DESKTOP
+    ═══════════════════════════════════════════════════════════ */
+    @media (min-width: 480px) {
+      .app-main { padding: 28px 20px 24px; }
+      .app-title { font-size: 2.2rem; }
+      .question-card, .result-card { padding: 32px 28px 28px; }
+      .q-text { font-size: 1.15rem; }
+      .roll-number.possible { font-size: 6rem; }
+      .option-btn { padding: 14px 18px; }
+    }
+
+    @media (min-width: 768px) {
+      .app-header { padding: 36px 20px 26px; }
+      .header-ship-icon svg { width: 66px; height: 66px; }
+      .app-title { font-size: 2.6rem; }
+      .footer-logo-link img { width: 170px; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       UTILITY
+    ═══════════════════════════════════════════════════════════ */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="app">
+
+    <!-- ════════════════════════════════════════════════════════
+         HEADER
+    ════════════════════════════════════════════════════════ -->
+    <header class="app-header">
+
+      <!-- Man-of-war ship icon in white -->
+      <div class="header-ship-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+             role="img" aria-label="Man of war sailing ship">
+          <path d="M90 340 Q256 365 422 340 L408 382 Q256 408 104 382 Z" fill="rgba(255,255,255,0.9)"/>
+          <rect x="96" y="318" width="320" height="24" rx="4" fill="rgba(255,255,255,0.65)"/>
+          <g fill="#050e1c" opacity="0.5">
+            <rect x="130" y="323" width="14" height="10" rx="2"/>
+            <rect x="162" y="323" width="14" height="10" rx="2"/>
+            <rect x="194" y="323" width="14" height="10" rx="2"/>
+            <rect x="226" y="323" width="14" height="10" rx="2"/>
+            <rect x="258" y="323" width="14" height="10" rx="2"/>
+            <rect x="290" y="323" width="14" height="10" rx="2"/>
+            <rect x="322" y="323" width="14" height="10" rx="2"/>
+            <rect x="354" y="323" width="14" height="10" rx="2"/>
+          </g>
+          <line x1="106" y1="308" x2="32" y2="218" stroke="rgba(255,255,255,0.75)" stroke-width="9" stroke-linecap="round"/>
+          <polygon points="108,308 32,218 100,264" fill="rgba(255,255,255,0.5)"/>
+          <rect x="157" y="128" width="9" height="190" rx="3" fill="rgba(255,255,255,0.8)"/>
+          <polygon points="161,132 198,170 124,170" fill="rgba(255,255,255,0.72)"/>
+          <polygon points="161,175 200,222 122,222" fill="rgba(255,255,255,0.58)"/>
+          <polygon points="161,227 200,278 122,278" fill="rgba(255,255,255,0.42)"/>
+          <rect x="250" y="80" width="10" height="240" rx="3" fill="rgba(255,255,255,0.92)"/>
+          <polygon points="255,84 300,128 210,128" fill="rgba(255,255,255,0.9)"/>
+          <polygon points="255,133 304,182 206,182" fill="rgba(255,255,255,0.72)"/>
+          <polygon points="255,187 304,246 206,246" fill="rgba(255,255,255,0.58)"/>
+          <polygon points="255,251 302,308 208,308" fill="rgba(255,255,255,0.42)"/>
+          <rect x="345" y="150" width="9" height="168" rx="3" fill="rgba(255,255,255,0.8)"/>
+          <polygon points="349,154 384,192 314,192" fill="rgba(255,255,255,0.72)"/>
+          <polygon points="349,197 382,242 316,242" fill="rgba(255,255,255,0.58)"/>
+          <polygon points="349,247 382,295 316,295" fill="rgba(255,255,255,0.42)"/>
+          <polygon points="250,80 278,90 250,100" fill="rgba(255,255,255,0.4)"/>
+          <path d="M55 398 Q150 378 256 396 Q362 414 458 396" stroke="rgba(255,255,255,0.18)" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M40 418 Q148 396 256 414 Q368 432 472 416" stroke="rgba(255,255,255,0.1)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <h1 class="app-title">Armada Shot Calc</h1>
+      <p class="app-subtitle">Mantic Armada · Shooting Modifier Calculator</p>
+
+    </header>
+
+    <!-- ════════════════════════════════════════════════════════
+         MAIN
+    ════════════════════════════════════════════════════════ -->
+    <main class="app-main">
+
+      <!-- Progress bar — hidden on result screen -->
+      <div id="progressContainer">
+        <div class="progress-meta">
+          <span class="progress-label" id="progressLabel">Weapon Type</span>
+          <span class="progress-count" id="progressCount">1 / 9</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill" style="width:11%"></div>
+        </div>
+      </div>
+
+      <!-- Question / result content — swapped with JS -->
+      <div id="mainContent"></div>
+
+      <!-- Back button — hidden on first question and result screen -->
+      <div class="nav-row">
+        <button class="btn-back hidden" id="backBtn" onclick="goBack()">← Back</button>
+      </div>
+
+    </main>
+
+    <!-- ════════════════════════════════════════════════════════
+         FOOTER
+         Clear CDS logo (white text, transparent bg) links back
+         to the main site and acts as the brand attribution.
+    ════════════════════════════════════════════════════════ -->
+    <footer class="app-footer">
+      <a class="footer-logo-link" href="../../" aria-label="Chaotic Dice Studios — home">
+        <img src="ChaoticDiceStudiosLogoDarkClear.svg" alt="Chaotic Dice Studios" />
+      </a>
+      <p class="footer-disclaimer">
+        Free community tool · Not affiliated with or endorsed by Mantic Games Ltd.<br>
+        Mantic Armada is &copy; Mantic Games Ltd. All rights reserved.
+      </p>
+    </footer>
+
+  </div><!-- /.app -->
+
+  <script>
+    // ════════════════════════════════════════════════════════════
+    // SERVICE WORKER REGISTRATION
+    // ════════════════════════════════════════════════════════════
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {
+          // Silently fail — app functions fine without SW caching.
+        });
+      });
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // QUESTIONS DATA
+    //
+    // Each question object:
+    //   id       {string}    — key stored in answers map
+    //   label    {string}    — short name shown in progress bar
+    //   question {string}    — heading text
+    //   subtext  {string?}   — optional italic clarifying note
+    //   skipIf   {function?} — (answers) => boolean; skip question if true
+    //   options  {array}     — selectable choices
+    //
+    // Each option:
+    //   label    {string}  — primary button text
+    //   desc     {string}  — secondary italic text
+    //   value    {string}  — stored in answers[question.id]
+    //   modifier {number}  — numeric contribution to the total modifier
+    // ════════════════════════════════════════════════════════════
+    const QUESTIONS = [
+      {
+        id: 'weapon',
+        label: 'Weapon Type',
+        question: 'What type of weapon is being fired?',
+        options: [
+          { label: 'Standard',  desc: 'Direct-fire weapon — range modifier applies',       value: 'standard',  modifier: 0  },
+          { label: 'Indirect',  desc: 'Arcing/mortar weapon — range modifier does not apply', value: 'indirect', modifier: -2 },
+        ],
+      },
+      {
+        id: 'range',
+        label: 'Range',
+        question: 'What is the range to target?',
+        // The range modifier does not apply to Indirect Weapons (rulebook p.24)
+        skipIf: (answers) => answers.weapon === 'indirect',
+        options: [
+          { label: 'Point Blank', desc: 'Target is within 3"',    value: 'point_blank', modifier: +2 },
+          { label: 'Close Range', desc: 'Target is within 10"',   value: 'close',       modifier:  0 },
+          { label: 'Long Range',  desc: 'Target is beyond 10"',   value: 'long',        modifier: -1 },
+        ],
+      },
+      {
+        id: 'crew',
+        label: 'Crew Quality',
+        question: "What is the shooting ship's crew quality?",
+        options: [
+          { label: 'Veteran',       desc: 'Experienced, battle-hardened crew', value: 'veteran',       modifier: +1 },
+          { label: 'Standard',      desc: 'Regular trained crew',              value: 'standard',      modifier:  0 },
+          { label: 'Inexperienced', desc: 'Green or poorly trained crew',      value: 'inexperienced', modifier: -1 },
+        ],
+      },
+      {
+        id: 'shooter_speed',
+        label: 'Shooter Speed',
+        question: "What is the shooting ship's speed?",
+        options: [
+          { label: 'Anchored / Grounded', desc: 'Ship is stationary or run aground', value: 'anchored', modifier: +1 },
+          { label: 'Battle Speed',        desc: 'Normal combat speed',               value: 'battle',   modifier:  0 },
+          { label: 'Full Speed',          desc: 'Moving at maximum speed',           value: 'full',     modifier: -1 },
+        ],
+      },
+      {
+        id: 'target_speed',
+        label: 'Target Speed',
+        question: "What is the target ship's speed?",
+        options: [
+          { label: 'Anchored / Grounded', desc: 'Target is stationary or run aground', value: 'anchored', modifier: +1 },
+          { label: 'Battle Speed',        desc: 'Normal combat speed',                 value: 'battle',   modifier:  0 },
+          { label: 'Full Speed',          desc: 'Moving at maximum speed',             value: 'full',     modifier: -1 },
+        ],
+      },
+      {
+        id: 'target_size',
+        label: 'Target Size',
+        question: 'What is the size of the target?',
+        options: [
+          { label: 'Tiny',                desc: 'Very small vessel',        value: 'tiny',     modifier: -2 },
+          { label: 'Small',               desc: 'Small vessel',             value: 'small',    modifier: -1 },
+          { label: 'Standard',            desc: 'Average-sized vessel',     value: 'standard', modifier:  0 },
+          { label: 'Large / Extra Large', desc: 'Large warship or capital', value: 'large',    modifier: +1 },
+        ],
+      },
+      {
+        id: 'visibility',
+        label: 'Visibility',
+        question: 'How visible is the target?',
+        options: [
+          { label: 'Fully Visible',     desc: 'Clear line of sight',              value: 'full',    modifier:  0 },
+          { label: 'Partially Visible', desc: 'Obscured by terrain, smoke, etc.', value: 'partial', modifier: -1 },
+        ],
+      },
+      {
+        id: 'snap_fire',
+        label: 'Snap Fire',
+        question: 'Is the shooting ship firing as she bears?',
+        subtext: 'Fire as She Bears: the ship fires opportunistically during movement rather than in a dedicated shooting activation.',
+        options: [
+          { label: 'Normal Shot',       desc: 'Standard shooting activation', value: 'no',  modifier:  0 },
+          { label: 'Fire as She Bears', desc: 'Snap fire during movement',    value: 'yes', modifier: -2 },
+        ],
+      },
+      {
+        id: 'evasive',
+        label: 'Evasive Move',
+        question: 'Has the shooting ship already evaded this activation?',
+        subtext: 'Applies if the shooting ship previously rolled to Evade during the current activation.',
+        options: [
+          { label: 'No Evasion', desc: 'Has not evaded this activation',        value: 'no',  modifier:  0 },
+          { label: 'Evaded',     desc: 'Already evaded during this activation', value: 'yes', modifier: -1 },
+        ],
+      },
+    ];
+
+    // ════════════════════════════════════════════════════════════
+    // APP STATE
+    // ════════════════════════════════════════════════════════════
+    const state = {
+      answers: {},  // { questionId: optionValue }
+      history: [],  // stack of question ids visited, for Back navigation
+    };
+
+    // ════════════════════════════════════════════════════════════
+    // HELPERS
+    // ════════════════════════════════════════════════════════════
+
+    /** Returns the filtered, ordered list of questions for the current answers. */
+    function getActiveQuestions() {
+      return QUESTIONS.filter((q) => !q.skipIf || !q.skipIf(state.answers));
+    }
+
+    /** Returns the next unanswered question, or null if all are answered. */
+    function getNextQuestion() {
+      return getActiveQuestions().find((q) => state.answers[q.id] === undefined) || null;
+    }
+
+    /** Returns the question object for a given id. */
+    function getQuestionById(id) {
+      return QUESTIONS.find((q) => q.id === id);
+    }
+
+    /** Formats a modifier as "+2", "−1", or "±0". Uses a proper minus sign (U+2212). */
+    function fmtMod(n) {
+      if (n > 0) return `+${n}`;
+      if (n < 0) return `\u22122212`.includes('x') ? `-${Math.abs(n)}` : `\u2212${Math.abs(n)}`;
+      return '\u00b10';
+    }
+
+    /** Returns the CSS class suffix for a modifier value: pos | neg | zero */
+    function modClass(n) {
+      return n > 0 ? 'pos' : n < 0 ? 'neg' : 'zero';
+    }
+
+    /** Returns the badge CSS class for an option modifier. */
+    function badgeClass(n) {
+      return n > 0 ? 'badge-pos' : n < 0 ? 'badge-neg' : 'badge-zero';
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // CALCULATION
+    // ════════════════════════════════════════════════════════════
+
+    /**
+     * Calculates the shot result from the collected answers.
+     *
+     * Returns:
+     *   totalModifier  {number}  — sum of all applicable modifiers
+     *   rawMinRoll     {number}  — 6 − totalModifier (before clamping)
+     *   minRoll        {number}  — effective minimum roll (clamped; nat 1 always misses)
+     *   impossible     {boolean} — true when rawMinRoll > 10
+     *   onlyTenHits    {boolean} — true when only a natural 10 can score
+     *   tenScoresCrit  {boolean} — true when a natural 10 produces a hit (and crit)
+     *   breakdown      {array}   — non-zero { label, modifier } contributions
+     *   isIndirect     {boolean} — whether an Indirect Weapon was fired
+     */
+    function calculateResult() {
+      const breakdown = [];
+      let total = 0;
+
+      function add(label, modifier) {
+        breakdown.push({ label, modifier });
+        total += modifier;
+      }
+
+      if (state.answers.weapon === 'indirect')       add('Indirect Weapon', -2);
+
+      if (state.answers.weapon !== 'indirect') {
+        if      (state.answers.range === 'point_blank') add('Point Blank (within 3")', +2);
+        else if (state.answers.range === 'long')        add('Long Range (over 10")', -1);
+      }
+
+      if      (state.answers.crew === 'veteran')       add('Veteran Crew', +1);
+      else if (state.answers.crew === 'inexperienced') add('Inexperienced Crew', -1);
+
+      if      (state.answers.shooter_speed === 'anchored') add('Shooting Ship: Anchored / Grounded', +1);
+      else if (state.answers.shooter_speed === 'full')     add('Shooting Ship: Full Speed', -1);
+
+      if      (state.answers.target_speed === 'anchored') add('Target Ship: Anchored / Grounded', +1);
+      else if (state.answers.target_speed === 'full')     add('Target Ship: Full Speed', -1);
+
+      if      (state.answers.target_size === 'tiny')  add('Target Size: Tiny', -2);
+      else if (state.answers.target_size === 'small') add('Target Size: Small', -1);
+      else if (state.answers.target_size === 'large') add('Target Size: Large / Extra Large', +1);
+
+      if (state.answers.visibility  === 'partial') add('Partially Visible', -1);
+      if (state.answers.snap_fire   === 'yes')     add('Fire as She Bears (Snap Fire)', -2);
+      if (state.answers.evasive     === 'yes')     add('Shooter Evaded This Activation', -1);
+
+      const rawMinRoll    = 6 - total;
+      const minRoll       = Math.max(2, rawMinRoll); // nat 1 always auto-misses
+      const impossible    = rawMinRoll > 10;
+      const tenScoresCrit = total >= -4;             // 10 + modifier >= 6
+      const onlyTenHits   = rawMinRoll === 10 && !impossible;
+
+      return { totalModifier: total, rawMinRoll, minRoll, impossible, onlyTenHits, tenScoresCrit, breakdown, isIndirect: state.answers.weapon === 'indirect' };
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // TRANSITION HELPER
+    // ════════════════════════════════════════════════════════════
+
+    /** Slides content out, runs the callback, then slides new content in. */
+    function transition(direction, callback) {
+      const el       = document.getElementById('mainContent');
+      const outClass = direction === 'forward' ? 'slide-out-left'  : 'slide-out-right';
+      const inClass  = direction === 'forward' ? 'slide-in-right'  : 'slide-in-left';
+
+      el.classList.add(outClass);
+      setTimeout(() => {
+        el.classList.remove(outClass);
+        callback();
+        el.classList.add(inClass);
+        setTimeout(() => el.classList.remove(inClass), 260);
+      }, 180);
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // RENDER — QUESTION
+    // ════════════════════════════════════════════════════════════
+
+    function renderQuestion(question) {
+      const active  = getActiveQuestions();
+      const stepNum = active.findIndex((q) => q.id === question.id) + 1;
+      const total   = active.length;
+
+      document.getElementById('progressContainer').classList.remove('hidden');
+      document.getElementById('progressLabel').textContent = question.label;
+      document.getElementById('progressCount').textContent = `${stepNum} / ${total}`;
+      document.getElementById('progressFill').style.width  = `${(stepNum / total) * 100}%`;
+      document.getElementById('backBtn').classList.toggle('hidden', state.history.length === 0);
+
+      const subtextHtml = question.subtext ? `<p class="q-subtext">${question.subtext}</p>` : '';
+
+      const optionsHtml = question.options.map((opt) => `
+        <li>
+          <button class="option-btn" onclick="selectOption('${question.id}', '${opt.value}')">
+            <span class="option-text-group">
+              <span class="option-label">${opt.label}</span>
+              <span class="option-desc">${opt.desc}</span>
+            </span>
+            <span class="option-badge ${badgeClass(opt.modifier)}">${fmtMod(opt.modifier)}</span>
+          </button>
+        </li>
+      `).join('');
+
+      document.getElementById('mainContent').innerHTML = `
+        <div class="card question-card">
+          <p class="q-step-label">Step ${stepNum} of ${total} — ${question.label}</p>
+          <h2 class="q-text">${question.question}</h2>
+          ${subtextHtml}
+          <ul class="options-list">${optionsHtml}</ul>
+        </div>
+      `;
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // RENDER — RESULT
+    // ════════════════════════════════════════════════════════════
+
+    function renderResult() {
+      const result = calculateResult();
+
+      document.getElementById('progressContainer').classList.add('hidden');
+      document.getElementById('backBtn').classList.add('hidden');
+
+      // ── Roll display ──
+      let rollHtml;
+      if (result.impossible) {
+        rollHtml = `
+          <div class="roll-display">
+            <p class="roll-label">Minimum Roll Needed</p>
+            <p class="roll-number impossible">—</p>
+            <p class="roll-suffix impossible">No hits possible</p>
+          </div>`;
+      } else {
+        const label = result.onlyTenHits ? 'natural 10 only' : 'or higher to hit';
+        rollHtml = `
+          <div class="roll-display">
+            <p class="roll-label">Minimum Roll Needed</p>
+            <p class="roll-number possible">${result.onlyTenHits ? 10 : result.minRoll}</p>
+            <p class="roll-suffix">${label}</p>
+          </div>`;
+      }
+
+      // ── Modifier pill ──
+      const mv = result.totalModifier;
+      const pillHtml = `
+        <div style="text-align:center; margin-top:-4px; margin-bottom:4px;">
+          <span class="modifier-pill">
+            <span class="pill-label">Total modifier</span>
+            <span class="pill-value pill-${modClass(mv)}">${fmtMod(mv)}</span>
+          </span>
+        </div>`;
+
+      // ── Breakdown ──
+      let breakdownInner;
+      if (result.breakdown.length === 0) {
+        breakdownInner = `<p class="no-modifiers">No modifiers apply — base target of 6.</p>`;
+      } else {
+        const rows = result.breakdown.map((r) => `
+          <li class="breakdown-row">
+            <span class="breakdown-row-label">${r.label}</span>
+            <span class="breakdown-row-mod mod-${modClass(r.modifier)}">${fmtMod(r.modifier)}</span>
+          </li>`).join('');
+        breakdownInner = `
+          <ul class="breakdown-list">${rows}</ul>
+          <div class="breakdown-total-row">
+            <span>Total modifier</span>
+            <span class="pill-${modClass(mv)}">${fmtMod(mv)}</span>
+          </div>`;
+      }
+
+      const breakdownHtml = `
+        <div class="breakdown-section">
+          <p class="section-title">Modifier Breakdown</p>
+          ${breakdownInner}
+        </div>`;
+
+      // ── Notes ──
+      const notes = [];
+      if (result.impossible) {
+        notes.push({ cls: 'note-danger', text: '<strong>No shots can hit.</strong> The required roll exceeds 10 — the maximum on a D10. Reposition or wait for better conditions.' });
+      } else if (result.onlyTenHits) {
+        notes.push({ cls: 'note-warn', text: '<strong>Only a natural 10 can hit,</strong> which automatically scores a Critical Hit.' });
+      } else {
+        notes.push({ cls: 'note-white', text: 'A natural roll of <strong>1</strong> always misses, regardless of modifiers.' });
+        notes.push(result.tenScoresCrit
+          ? { cls: 'note-white', text: 'A natural roll of <strong>10</strong> scores a Critical Hit (provided it hits).' }
+          : { cls: 'note-warn',  text: 'Even a natural <strong>10</strong> does not score a hit — no Critical Hits are possible with this modifier.' });
+      }
+
+      if (result.isIndirect) {
+        notes.push({ cls: 'note-info', text: '<strong>Indirect Deviation:</strong> On a miss, roll D6+2 inches in the direction the die is pointing (measured from the target base centre). If this still hits the original target or the firing ship, the shot is a dud.' });
+      }
+
+      const notesHtml = notes.map((n) => `<div class="note ${n.cls}">${n.text}</div>`).join('');
+
+      document.getElementById('mainContent').innerHTML = `
+        <div class="card result-card">
+          <p class="result-heading">Shot Result</p>
+          ${rollHtml}
+          ${pillHtml}
+          ${breakdownHtml}
+          <div class="notes-section">${notesHtml}</div>
+          <button class="btn-restart" onclick="restart()">Calculate Another Shot</button>
+        </div>`;
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // NAVIGATION
+    // ════════════════════════════════════════════════════════════
+
+    function selectOption(questionId, value) {
+      state.answers[questionId] = value;
+      state.history.push(questionId);
+      transition('forward', () => {
+        const next = getNextQuestion();
+        if (next) renderQuestion(next);
+        else      renderResult();
+      });
+    }
+
+    function goBack() {
+      if (state.history.length === 0) return;
+      const prevId = state.history.pop();
+      delete state.answers[prevId];
+      transition('backward', () => renderQuestion(getQuestionById(prevId)));
+    }
+
+    function restart() {
+      state.answers = {};
+      state.history = [];
+      transition('backward', () => {
+        document.getElementById('progressContainer').classList.remove('hidden');
+        renderQuestion(getActiveQuestions()[0]);
+      });
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // INIT
+    // ════════════════════════════════════════════════════════════
+    (function init() {
+      renderQuestion(getActiveQuestions()[0]);
+    })();
+  </script>
+</body>
+</html>
