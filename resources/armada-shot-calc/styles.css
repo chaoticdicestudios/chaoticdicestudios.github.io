@@ -149,6 +149,14 @@ html, body {
   display: inline-block;
   margin-bottom: 12px;
   filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+  transition: transform 0.2s ease; /* Adds a nice feel when hovering */
+  text-decoration: none;
+}
+
+/* Make it clear it's clickable by scaling slightly on hover */
+.header-ship-icon:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
 }
 
 .header-ship-icon img {

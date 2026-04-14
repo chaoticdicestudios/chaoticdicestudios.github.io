@@ -10,13 +10,13 @@
   "categories": ["games", "utilities"],
   "icons": [
     {
-      "src": "icon.svg",
+      "src": "galleon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "icon.svg",
+      "src": "galleon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"
