@@ -16,7 +16,7 @@
       "purpose": "any"
     },
     {
-      "src": "galleon.svg",
+      "src": "galleon-pwa-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"
