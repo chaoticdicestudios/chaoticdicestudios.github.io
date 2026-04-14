@@ -1,6 +1,6 @@
 {
   "name": "Armada Shot Calc",
-  "short_name": "Shot Calc",
+  "short_name": "Armada Shot",
   "description": "Mantic Armada shooting modifier calculator — a free community tool by Chaotic Dice Studios.",
   "start_url": "./",
   "display": "standalone",
