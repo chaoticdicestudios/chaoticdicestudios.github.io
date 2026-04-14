@@ -38,38 +38,38 @@ ul     { list-style: none; }
 :root {
   /* --- Colour palette --- */
   --color-bg-page:        #050e1c;   /* deepest background, also used for PWA theme */
-  --color-bg-gradient-1:  #0e2540;   /* radial highlight at top of .app */
+  --color-bg-gradient-1:  #0f2a4a;  /* radial highlight at top of .app */
   --color-bg-gradient-2:  #02080f;   /* bottom of page gradient */
-  --color-bg-card:        #0c1d30;   /* card surface */
-  --color-border-card:    rgba(255, 255, 255, 0.08);
-  --color-border-subtle:  rgba(255, 255, 255, 0.05);
+  --color-bg-card:        #0f243a;   /* card surface */
+  --color-border-card:    rgba(255, 255, 255, 0.10);
+  --color-border-subtle:  rgba(255, 255, 255, 0.06);
 
   /* White scale — used for text and accents */
   --color-white:          #ffffff;
-  --color-white-dim:      rgba(255, 255, 255, 0.55);
-  --color-white-faint:    rgba(255, 255, 255, 0.35);
-  --color-white-ghost:    rgba(255, 255, 255, 0.05);
+  --color-white-dim:      rgba(255, 255, 255, 0.75); 
+  --color-white-faint:    rgba(255, 255, 255, 0.55);
+  --color-white-ghost:    rgba(255, 255, 255, 0.06);
 
   /* Body text */
-  --color-text:           #c0d4e8;
-  --color-text-dim:       #4e6880;
+  --color-text:           #d6e6f5;
+  --color-text-dim:       #9fb6cc;
 
   /* Semantic colours — modifier badges and notes */
-  --color-positive:       #5db87a;   /* positive modifier */
-  --color-negative:       #c96060;   /* negative modifier / impossible */
-  --color-warning:        #d4813a;   /* amber warning */
-  --color-info:           #3d72a8;   /* indirect weapon note */
+  --color-positive:       #6fdc9a;   /* positive modifier */
+  --color-negative:       #ff7a7a;   /* negative modifier / impossible */
+  --color-warning:        #f2a65a;   /* amber warning */
+  --color-info:           #6ea8dc;   /* indirect weapon note */
 
   /* Semantic note text colours — foreground text inside each note variant */
-  --color-text-warn:      #c88040;
-  --color-text-danger:    #c08080;
-  --color-text-info:      #6fa0cc;
+  --color-text-warn:      #f2a65a;
+  --color-text-danger:    #ff9a9a;
+  --color-text-info:      #8fc2ff;
 
   /* Semantic backgrounds */
-  --color-bg-positive:    rgba(93,  184, 122, 0.10);
-  --color-bg-negative:    rgba(201,  96,  96, 0.12);
-  --color-bg-warning:     rgba(212, 129,  58, 0.08);
-  --color-bg-info:        rgba(61,  114, 168, 0.07);
+  --color-bg-positive:    rgba(111, 220, 154, 0.14);
+  --color-bg-negative:    rgba(255, 122, 122, 0.16);
+  --color-bg-warning:     rgba(242, 166, 90, 0.12);
+  --color-bg-info:        rgba(110, 168, 220, 0.12);
 
   /* --- Typography --- */
   --font-display:         'Permanent Marker', cursive;  /* app title only */
@@ -571,11 +571,15 @@ html, body {
 
 .footer-logo-link {
   display: inline-block;
-  opacity: 0.45;
-  transition: opacity 150ms ease;
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+  text-decoration: none;
 }
 
-.footer-logo-link:hover { opacity: 0.8; }
+.footer-logo-link:hover { 
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3)); 
+}
 
 .footer-logo-link img {
   width: 140px;
