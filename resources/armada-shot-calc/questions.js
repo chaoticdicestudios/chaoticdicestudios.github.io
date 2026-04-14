@@ -26,13 +26,13 @@ const QUESTIONS = [
     options: [
       {
         label: 'Standard',
-        desc:  'Direct-fire weapon — range modifier applies',
+        desc:  'Direct-fire weapon',
         value: 'standard',
         modifier: 0,
       },
       {
         label: 'Indirect',
-        desc:  'Arcing/mortar weapon — range modifier does not apply',
+        desc:  'Arcing/mortar weapon',
         value: 'indirect',
         modifier: -2,
       },
