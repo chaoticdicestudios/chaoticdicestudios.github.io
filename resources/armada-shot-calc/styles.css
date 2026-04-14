@@ -119,6 +119,9 @@ html, body {
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;      /* Stops the horizontal flash during slide animations */
+  overflow-y: auto;        /* Allows vertical scrolling if content is long */
+  scrollbar-gutter: stable; /* Keeps the layout from shifting on desktop */
 }
 
 .app {
