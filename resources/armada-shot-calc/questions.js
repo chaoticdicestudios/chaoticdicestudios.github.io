@@ -68,7 +68,7 @@ const QUESTIONS = [
     question: "What is the shooting ship's speed?",
     options: [
       { label: 'Anchored / Grounded', desc: 'Ship is stationary or run aground', value: 'anchored', modifier: +1 },
-      { label: 'Steady/Battle Speed', desc: 'Normal combat speed',               value: 'battle',   modifier:  0 },
+      { label: 'Steady / Battle Speed', desc: 'Normal combat speed',               value: 'battle',   modifier:  0 },
       { label: 'Full Speed',          desc: 'Moving at maximum speed',           value: 'full',     modifier: -1 },
     ],
   },
@@ -79,7 +79,7 @@ const QUESTIONS = [
     question: "What is the target ship's speed?",
     options: [
       { label: 'Anchored / Grounded', desc: 'Target is stationary or run aground', value: 'anchored', modifier: +1 },
-      { label: 'Steady/Battle Speed', desc: 'Normal combat speed',                 value: 'battle',   modifier:  0 },
+      { label: 'Steady / Battle Speed', desc: 'Normal combat speed',                 value: 'battle',   modifier:  0 },
       { label: 'Full Speed',          desc: 'Moving at maximum speed',             value: 'full',     modifier: -1 },
     ],
   },
