@@ -89,10 +89,10 @@ const QUESTIONS = [
     label: 'Target Size',
     question: 'What is the size of the target?',
     options: [
-      { label: 'Tiny',                desc: 'Very small vessel',        value: 'tiny',     modifier: -2 },
-      { label: 'Small',               desc: 'Small vessel',             value: 'small',    modifier: -1 },
-      { label: 'Medium',              desc: 'Medium vessel',            value: 'medium',   modifier:  0 },
-      { label: 'Large / Extra Large', desc: 'Very large vessel',        value: 'large',    modifier: +1 },
+      { label: 'Tiny',                desc: 'Very difficult to hit',        value: 'tiny',     modifier: -2 },
+      { label: 'Small',               desc: 'Difficult to hit',             value: 'small',    modifier: -1 },
+      { label: 'Medium',              desc: 'Standard difficulty to hit',            value: 'medium',   modifier:  0 },
+      { label: 'Large / Extra Large', desc: 'Easeir to hit',        value: 'large',    modifier: +1 },
     ],
   },
 
@@ -102,7 +102,7 @@ const QUESTIONS = [
     question: 'How visible is the target?',
     options: [
       { label: 'Fully Visible',     desc: 'Clear line of sight',                            value: 'full',    modifier:  0 },
-      { label: 'Partially Visible', desc: 'Obscured by terrain, smoke, partial shot line.', value: 'partial', modifier: -1 },
+      { label: 'Partially Visible', desc: 'Obscured by terrain, smoke, partial shot line, etc...', value: 'partial', modifier: -1 },
     ],
   },
 
