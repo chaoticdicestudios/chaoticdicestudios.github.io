@@ -29,7 +29,6 @@
 <body>
   <div class="app">
 
-    <!-- ── Header ─────────────────────────────────────────── -->
     <header class="app-header">
       <a href="https://game-icons.net/1x1/lorc/galleon.html" 
         class="header-ship-icon" 
@@ -44,10 +43,9 @@
       <p class="app-subtitle">Mantic Armada · Shooting Modifier Calculator</p>
     </header>
 
-    <!-- ── Main ───────────────────────────────────────────── -->
     <main class="app-main">
 
-      <!-- Progress bar — JS hides this on the result screen -->
+      <!-- Progress bar - JS hides this on the result screen -->
       <div id="progressContainer">
         <div class="progress-meta">
           <span class="progress-label" id="progressLabel"></span>
@@ -58,10 +56,9 @@
         </div>
       </div>
 
-      <!-- Question / result panel — entirely managed by JS -->
       <div id="mainContent"></div>
 
-      <!-- Navigation row — Back (left) and Reset (right) -->
+      <!-- Navigation row - Back (left) and Reset (right) -->
       <!-- JS shows/hides these depending on which step we're on -->
       <div class="nav-row">
         <button class="btn-nav hidden" id="backBtn"  onclick="goBack()">← Back</button>
@@ -70,7 +67,6 @@
 
     </main>
 
-    <!-- ── Footer ─────────────────────────────────────────── -->
     <footer class="app-footer">
       <a class="footer-logo-link" href="../../" aria-label="Chaotic Dice Studios — Home" title="Chaotic Dice Studios — Home">
         <img src="../../images/logo.svg" alt="Chaotic Dice Studios" />
