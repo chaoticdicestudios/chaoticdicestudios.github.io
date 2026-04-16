@@ -69,7 +69,7 @@ const QUESTIONS = [
     question: "What is the shooting ship's speed?",
     options: [
       { label: 'Anchored / Grounded', desc: 'Ship is stationary or run aground', value: 'anchored', modifier: +1 },
-      { label: 'Battle Speed',        desc: 'Normal combat speed',               value: 'battle',   modifier:  0 },
+      { label: 'Steady/Battle Speed', desc: 'Normal combat speed',               value: 'battle',   modifier:  0 },
       { label: 'Full Speed',          desc: 'Moving at maximum speed',           value: 'full',     modifier: -1 },
     ],
   },
@@ -80,7 +80,7 @@ const QUESTIONS = [
     question: "What is the target ship's speed?",
     options: [
       { label: 'Anchored / Grounded', desc: 'Target is stationary or run aground', value: 'anchored', modifier: +1 },
-      { label: 'Battle Speed',        desc: 'Normal combat speed',                 value: 'battle',   modifier:  0 },
+      { label: 'Steady/Battle Speed', desc: 'Normal combat speed',                 value: 'battle',   modifier:  0 },
       { label: 'Full Speed',          desc: 'Moving at maximum speed',             value: 'full',     modifier: -1 },
     ],
   },
@@ -92,8 +92,8 @@ const QUESTIONS = [
     options: [
       { label: 'Tiny',                desc: 'Very small vessel',        value: 'tiny',     modifier: -2 },
       { label: 'Small',               desc: 'Small vessel',             value: 'small',    modifier: -1 },
-      { label: 'Standard',            desc: 'Average-sized vessel',     value: 'standard', modifier:  0 },
-      { label: 'Large / Extra Large', desc: 'Large warship or capital', value: 'large',    modifier: +1 },
+      { label: 'Medium',              desc: 'Medium vessel',            value: 'medium',   modifier:  0 },
+      { label: 'Large / Extra Large', desc: 'Very large vessel',        value: 'large',    modifier: +1 },
     ],
   },
 
@@ -102,8 +102,8 @@ const QUESTIONS = [
     label: 'Visibility',
     question: 'How visible is the target?',
     options: [
-      { label: 'Fully Visible',     desc: 'Clear line of sight',              value: 'full',    modifier:  0 },
-      { label: 'Partially Visible', desc: 'Obscured by terrain, smoke, etc.', value: 'partial', modifier: -1 },
+      { label: 'Fully Visible',     desc: 'Clear line of sight',                            value: 'full',    modifier:  0 },
+      { label: 'Partially Visible', desc: 'Obscured by terrain, smoke, partial shot line.', value: 'partial', modifier: -1 },
     ],
   },
 

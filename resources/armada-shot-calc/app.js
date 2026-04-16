@@ -420,7 +420,7 @@ function buildNotesHTML(result) {
   if (result.isIndirect) {
     notes.push({
       cls:  'note-info',
-      text: '<strong>Indirect Deviation:</strong> On a miss, roll D6+2 inches in the direction the die is pointing (measured from the target base centre). If this still hits the original target or the firing ship, the shot is a dud.',
+      text: '<strong>Indirect Deviation:</strong> On a miss, roll D6+2 inches in the direction the d10 shot die is pointing (measured from the target base centre). If this still hits the original target or the firing ship, the shot is a dud.',
     });
   }
 
