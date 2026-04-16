@@ -8,7 +8,7 @@ const ASSETS = [
   './app.js',
   './questions.js',
   './manifest.json',
-  './galleon.svg',
+  './icons',
   '../../images/logo.svg'
 ];
 

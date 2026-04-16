@@ -2,7 +2,7 @@
   "name": "Armada Shot Calc",
   "short_name": "Armada Shot",
   "description": "Mantic Armada shooting modifier calculator — a free community tool by Chaotic Dice Studios.",
-  "start_url": "./",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#050e1c",
   "theme_color": "#050e1c",
@@ -19,6 +19,22 @@
       "src": "galleon-pwa-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/galleon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/galleon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/galleon-pwa-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "maskable"
     }
   ]
