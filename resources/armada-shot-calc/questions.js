@@ -43,12 +43,11 @@ const QUESTIONS = [
     id: 'range',
     label: 'Range',
     question: 'What is the range to target?',
-    // The range modifier does not apply to Indirect Weapons (rulebook p.24)
-    skipIf: (answers) => answers.weapon === 'indirect',
     options: [
       { label: 'Point Blank', desc: 'Target is within 3"',   value: 'point_blank', modifier: +2 },
       { label: 'Close Range', desc: 'Target is within 10"',  value: 'close',       modifier:  0 },
-      { label: 'Long Range',  desc: 'Target is beyond 10"',  value: 'long',        modifier: -1 },
+      { label: 'Long Range',  desc: 'Target is beyond 10"',  value: 'long',        modifier: -1,  hideIf: (answers) => answers.weapon === 'indirect', },
+      { label: 'Long Range',  desc: 'Target is beyond 10" - No penalty for indirect weapons',  value: 'long',        modifier: 0,   hideIf: (answers) => answers.weapon !== 'indirect', },
     ],
   },
 

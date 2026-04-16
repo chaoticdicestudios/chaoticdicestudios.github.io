@@ -284,7 +284,10 @@ function renderQuestion(question) {
     ? `<p class="q-subtext">${question.subtext}</p>`
     : '';
 
-  const optionsHTML = question.options
+  const visibleOptions = question.options
+  .filter((opt) => !opt.hideIf || !opt.hideIf(state.answers));
+
+  const optionsHTML = visibleOptions
     .map((option) => buildOptionHTML(question, option))
     .join('');
 
