@@ -1,4 +1,4 @@
-const CACHE_NAME = 'armada-calc-v1.0.2';
+const CACHE_NAME = 'armada-calc-v1.0.3';
 const FONT_CACHE_NAME = 'google-fonts-cache';
 
 const ASSETS = [
@@ -8,7 +8,12 @@ const ASSETS = [
   './app.js',
   './questions.js',
   './manifest.json',
-  './icons',
+  './icons/galleon.svg',
+  './icons/galleon-192.png',
+  './icons/galleon-512.png',
+  './icons/galleon-pwa-icon.svg',
+  './icons/galleon-pwa-icon-180.png',
+  './icons/galleon-pwa-icon-512.png',
   '../../images/logo.svg'
 ];
 
