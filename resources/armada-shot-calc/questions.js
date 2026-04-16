@@ -8,7 +8,6 @@
  *   label    {string}    — short name shown in the progress bar
  *   question {string}    — heading displayed on the question card
  *   subtext  {string?}   — optional clarifying paragraph (italic)
- *   skipIf   {function?} — (answers) => boolean; skip this question if true
  *   options  {Option[]}  — the selectable choices
  *
  * Each Option object:
@@ -16,6 +15,7 @@
  *   desc     {string}  — secondary italic description
  *   value    {string}  — the value stored in state.answers[question.id]
  *   modifier {number}  — the numeric contribution to the total modifier
+ *   hideIf   {function?} — (answers) => boolean; hide this option if true
  */
 
 const QUESTIONS = [
