@@ -1,4 +1,4 @@
-const CACHE_NAME = 'armada-calc-v1.0.4';
+const CACHE_NAME = 'armada-calc-v1.0.5';
 const FONT_CACHE_NAME = 'google-fonts-cache';
 
 const ASSETS = [
