@@ -22,12 +22,12 @@
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => {
-      // SW is minimal (no caching) — app works fine if registration fails.
-    });
+    navigator.serviceWorker.register('./sw.js')
+      .catch((error) => {
+        console.error('ServiceWorker registration failed:', error);
+      });
   });
 }
-
 
 /* ── 2. State ─────────────────────────────────────────────── */
 
@@ -45,12 +45,11 @@ const state = {
 /* ── 3. Question Helpers ──────────────────────────────────── */
 
 /**
- * Returns only the questions that are active given the current answers.
- * Questions with a skipIf function are excluded when that function returns true.
+ * Returns all available questions. Method incase filtering is needed.
  * @returns {Question[]}
  */
 function getActiveQuestions() {
-  return QUESTIONS.filter((q) => !q.skipIf || !q.skipIf(state.answers));
+  return QUESTIONS;
 }
 
 /**
@@ -184,7 +183,6 @@ function calculateResult() {
   if (state.answers.evasive === 'yes') addModifier('Shooter Evaded This Activation', -1);
 
   // ── Derive roll values ──
-
   const rawMinRoll = 6 - modifierTotal;
 
   // A natural 1 always auto-misses regardless of modifiers, so the effective
