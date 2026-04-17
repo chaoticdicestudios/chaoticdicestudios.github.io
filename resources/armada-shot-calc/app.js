@@ -123,6 +123,7 @@ function badgeClass(n) {
  *   impossible     {boolean}  — true when rawMinRoll > 10 (exceeds d10 maximum)
  *   onlyTenHits    {boolean}  — true when only a natural 10 can score a hit
  *   tenScoresCrit  {boolean}  — true when a natural 10 produces a hit (and therefore a crit)
+ *   nineScoresCrit {boolean}  — true when a natural 9 from indirect weapons produces a hit (and therefore a crit)
  *   breakdown      {array}    — non-zero { label, modifier } contributions, in application order
  *   isIndirect     {boolean}  — whether an Indirect Weapon was fired
  *
@@ -130,12 +131,12 @@ function badgeClass(n) {
  */
 function calculateResult() {
   const breakdown = [];
-  let total = 0;
+  let modifierTotal = 0;
 
   // Helper: records a modifier contribution and adds it to the running total.
   function addModifier(label, modifier) {
     breakdown.push({ label, modifier });
-    total += modifier;
+    modifierTotal += modifier;
   }
 
   // ── Apply modifiers in rulebook order (p.24) ──
@@ -180,7 +181,7 @@ function calculateResult() {
 
   // ── Derive roll values ──
 
-  const rawMinRoll = 6 - total;
+  const rawMinRoll = 6 - modifierTotal;
 
   // A natural 1 always auto-misses regardless of modifiers, so the effective
   // minimum meaningful roll is 2.
@@ -188,19 +189,21 @@ function calculateResult() {
 
   const impossible = rawMinRoll > 10;
 
-  // A natural 10 scores a hit when: 10 + modifier >= 6, i.e. modifier >= -4
-  const tenScoresCrit = total >= -4;
+  // For indirect weapons, crits occur on a 9 or 10. For standard, on a 10 only.
+  const tenScoresCrit = modifierTotal >= -4;
+  const nineScoresCrit = state.answers.weapon === 'indirect' && modifierTotal >= -3;
 
   // Only a natural 10 can hit when rawMinRoll is exactly 10
   const onlyTenHits = rawMinRoll === 10 && !impossible;
 
   return {
-    totalModifier: total,
+    totalModifier: modifierTotal,
     rawMinRoll,
     minRoll,
     impossible,
     onlyTenHits,
     tenScoresCrit,
+    nineScoresCrit,
     breakdown,
     isIndirect: state.answers.weapon === 'indirect',
   };
@@ -414,10 +417,13 @@ function buildNotesHTML(result) {
       cls:  'note-white',
       text: 'A natural roll of <strong>1</strong> always misses, regardless of modifiers.',
     });
-    notes.push(result.tenScoresCrit
-      ? { cls: 'note-white', text: 'A natural roll of <strong>10</strong> scores a Critical Hit (provided it hits).' }
-      : { cls: 'note-warn',  text: 'Even a natural <strong>10</strong> does not score a hit — no Critical Hits are possible with this modifier.' }
-    );
+    if (result.nineScoresCrit) {
+      notes.push({ cls: 'note-white', text: 'Indirect weapon: natural rolls of <strong>9 or 10</strong> score a Critical Hit (provided they hit).' });
+    } else if (result.tenScoresCrit) {
+      notes.push({ cls: 'note-white', text: 'A natural roll of <strong>10</strong> scores a Critical Hit (provided it hits).' });
+    } else {
+      notes.push({ cls: 'note-warn',  text: 'Even a natural <strong>10</strong> does not score a hit — no Critical Hits are possible with this modifier.' });
+    }
   }
 
   if (result.isIndirect) {
