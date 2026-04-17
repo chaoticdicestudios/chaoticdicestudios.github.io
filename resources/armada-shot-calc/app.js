@@ -45,19 +45,11 @@ const state = {
 /* ── 3. Question Helpers ──────────────────────────────────── */
 
 /**
- * Returns all available questions. Method incase filtering is needed.
- * @returns {Question[]}
- */
-function getActiveQuestions() {
-  return QUESTIONS;
-}
-
-/**
  * Returns the first unanswered active question, or null if all are answered.
  * @returns {Question|null}
  */
 function getNextQuestion() {
-  return getActiveQuestions().find((q) => state.answers[q.id] === undefined) ?? null;
+  return QUESTIONS.find((q) => state.answers[q.id] === undefined) ?? null;
 }
 
 /**
@@ -132,70 +124,35 @@ function calculateResult() {
   const breakdown = [];
   let modifierTotal = 0;
 
-  // Helper: records a modifier contribution and adds it to the running total.
-  function addModifier(label, modifier) {
-    breakdown.push({ label, modifier });
-    modifierTotal += modifier;
-  }
+  // 1. Loop through the questions to build the total and breakdown
+  QUESTIONS.forEach((q) => {
+    const selectedValue = state.answers[q.id];
+    if (selectedValue === undefined) return;
 
-  // ── Apply modifiers in rulebook order (p.24) ──
+    // Find the option that matches the value AND is currently "visible"
+    // (This handles the dual 'long' range options in questions.js)
+    const option = q.options.find((opt) => 
+      opt.value === selectedValue && 
+      (!opt.hideIf || !opt.hideIf(state.answers))
+    );
 
-  // Weapon type
-  if (state.answers.weapon === 'indirect') {
-    addModifier('Indirect Weapon', -2);
-  }
+    if (option && option.modifier !== 0) {
+      // Create a descriptive label (e.g., "Range: Point Blank")
+      const displayLabel = q.id === 'weapon' ? option.label : `${q.label}: ${option.label}`;
+      
+      breakdown.push({ label: displayLabel, modifier: option.modifier });
+      modifierTotal += option.modifier;
+    }
+  });
 
-  // Range (different for Indirect Weapons)
-  if (state.answers.weapon === 'indirect') {
-    if      (state.answers.range === 'point_blank') addModifier('Point Blank (within 3")', +2);
-    // Close range, long range: no modifier
-  }
-  else {
-        if      (state.answers.range === 'point_blank') addModifier('Point Blank (within 3")', +2);
-        else if (state.answers.range === 'long')        addModifier('Long Range (over 10")', -1);
-        // Close range: no modifier
-  }
-
-  // Crew quality
-  if      (state.answers.crew === 'veteran')       addModifier('Veteran Crew', +1);
-  else if (state.answers.crew === 'inexperienced') addModifier('Inexperienced Crew', -1);
-
-  // Shooting ship speed
-  if      (state.answers.shooter_speed === 'anchored') addModifier('Shooting Ship: Anchored / Grounded', +1);
-  else if (state.answers.shooter_speed === 'full')     addModifier('Shooting Ship: Full Speed', -1);
-
-  // Target ship speed
-  if      (state.answers.target_speed === 'anchored') addModifier('Target Ship: Anchored / Grounded', +1);
-  else if (state.answers.target_speed === 'full')     addModifier('Target Ship: Full Speed', -1);
-
-  // Target size
-  if      (state.answers.target_size === 'tiny')  addModifier('Target Size: Tiny', -2);
-  else if (state.answers.target_size === 'small') addModifier('Target Size: Small', -1);
-  else if (state.answers.target_size === 'large') addModifier('Target Size: Large / Extra Large', +1);
-
-  // Visibility
-  if (state.answers.visibility === 'partial') addModifier('Partially Visible', -1);
-
-  // Snap fire
-  if (state.answers.snap_fire === 'yes') addModifier('Fire as She Bears (Snap Fire)', -2);
-
-  // Evasive move
-  if (state.answers.evasive === 'yes') addModifier('Shooter Evaded This Activation', -1);
-
-  // ── Derive roll values ──
+  // 2. Derive roll values
   const rawMinRoll = 6 - modifierTotal;
-
-  // A natural 1 always auto-misses regardless of modifiers, so the effective
-  // minimum meaningful roll is 2.
   const minRoll = Math.max(2, rawMinRoll);
-
   const impossible = rawMinRoll > 10;
 
-  // For indirect weapons, crits occur on a 9 or 10. For standard, on a 10 only.
+  const isIndirect = state.answers.weapon === 'indirect';
   const tenScoresCrit = modifierTotal >= -4;
-  const nineScoresCrit = state.answers.weapon === 'indirect' && modifierTotal >= -3;
-
-  // Only a natural 10 can hit when rawMinRoll is exactly 10
+  const nineScoresCrit = isIndirect && modifierTotal >= -3;
   const onlyTenHits = rawMinRoll === 10 && !impossible;
 
   return {
@@ -207,7 +164,7 @@ function calculateResult() {
     tenScoresCrit,
     nineScoresCrit,
     breakdown,
-    isIndirect: state.answers.weapon === 'indirect',
+    isIndirect,
   };
 }
 
@@ -270,7 +227,7 @@ function buildOptionHTML(question, option) {
  * @param {Question} question
  */
 function renderQuestion(question) {
-  const activeQuestions = getActiveQuestions();
+  const activeQuestions = QUESTIONS;
   const stepNumber      = activeQuestions.findIndex((q) => q.id === question.id) + 1;
   const totalSteps      = activeQuestions.length;
   const isFirstStep     = state.history.length === 0;
@@ -511,7 +468,7 @@ function restart() {
 
   transition('backward', () => {
     document.getElementById('progressContainer').classList.remove('hidden');
-    renderQuestion(getActiveQuestions()[0]);
+    renderQuestion(QUESTIONS[0]);
   });
 }
 
@@ -522,5 +479,5 @@ function restart() {
  * Entry point — renders the first question on page load.
  */
 (function init() {
-  renderQuestion(getActiveQuestions()[0]);
+  renderQuestion(QUESTIONS[0]);
 }());
