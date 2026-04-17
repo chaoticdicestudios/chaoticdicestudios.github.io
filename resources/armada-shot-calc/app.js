@@ -146,11 +146,15 @@ function calculateResult() {
     addModifier('Indirect Weapon', -2);
   }
 
-  // Range (skipped entirely for Indirect Weapons)
-  if (state.answers.weapon !== 'indirect') {
+  // Range (different for Indirect Weapons)
+  if (state.answers.weapon === 'indirect') {
     if      (state.answers.range === 'point_blank') addModifier('Point Blank (within 3")', +2);
-    else if (state.answers.range === 'long')        addModifier('Long Range (over 10")', -1);
-    // Close range: no modifier, no breakdown entry
+    // Close range, long range: no modifier
+  }
+  else {
+        if      (state.answers.range === 'point_blank') addModifier('Point Blank (within 3")', +2);
+        else if (state.answers.range === 'long')        addModifier('Long Range (over 10")', -1);
+        // Close range: no modifier
   }
 
   // Crew quality
