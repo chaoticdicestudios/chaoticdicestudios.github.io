@@ -1,8 +1,22 @@
+:root {
+  --background-color: #0a0a0a;
+  --background-85alpha: rgba(10, 10, 10, 0.85);
+  --foreground-color: #ffffff;
+  --foreground-55alpha: rgba(255, 255, 255, 0.55);
+  --foreground-20alpha: rgba(255, 255, 255, 0.2);
+  --font-size-title: clamp(0.75rem, 2.5vw, 1rem);
+  --font-size-nav: 0.7rem;
+  --font-weight-bold: 700;
+  --text-transform-uppercase: uppercase;
+  --letter-spacing-title: 0.45em;
+  --letter-spacing-navigation: 0.35em;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: #0a0a0a;
-  color: #ffffff;
+  background: var(--background-color);
+  color: var(--foreground-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -11,7 +25,6 @@ body {
   font-family: system-ui, sans-serif;
 }
 
-/* ── Nav ── */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -19,23 +32,22 @@ nav {
   justify-content: center;
   gap: 3rem;
   padding: 1.25rem;
-  background: rgba(10,10,10,0.85);
+  background: var(--background-85alpha);
   backdrop-filter: blur(6px);
 }
 
 nav a {
-  color: rgba(255,255,255,0.55);
+  color: var(--foreground-55alpha);
   text-decoration: none;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
+  font-size: var(--font-size-nav);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-navigation);
+  text-transform: var(--text-transform-uppercase);
   transition: color 0.2s;
 }
 
-nav a:hover { color: #ffffff; }
+nav a:hover { color: var(--foreground-color); }
 
-/* ── Stage ── */
 .stage {
   display: flex;
   flex-direction: column;
@@ -54,16 +66,16 @@ nav a:hover { color: #ffffff; }
 
 .logo-wrap a { display: block; }
 
-/* ── Sub-page heading ── */
-.page-title {
-  font-size: clamp(0.7rem, 2.5vw, 0.9rem);
-  font-weight: 700;
-  letter-spacing: 0.45em;
-  text-transform: uppercase;
-  opacity: 0.9;
+.page-title,
+.coming-soon {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-title);
+  text-transform: var(--text-transform-uppercase);
 }
 
-/* ── Rule ── */
+.coming-soon { opacity: 0.6; }
+
 .rule {
   display: flex;
   align-items: center;
@@ -75,47 +87,20 @@ nav a:hover { color: #ffffff; }
   content: '';
   flex: 1;
   height: 1px;
-  background: rgba(255,255,255,0.2);
-}
-
-.rule::after {
-  background: rgba(255,255,255,0.2);
+  background: var(--foreground-20alpha);
 }
 
 .rule-gem {
   width: 5px;
   height: 5px;
-  background: #ffffff;
+  background: var(--foreground-color);
   transform: rotate(45deg);
   opacity: 0.4;
   flex-shrink: 0;
 }
 
-/* ── Coming soon ── */
-.coming-soon {
-  font-size: clamp(0.75rem, 2.5vw, 1rem);
-  font-weight: 700;
-  letter-spacing: 0.45em;
-  text-transform: uppercase;
-  opacity: 0.6;
-}
-
-/* ── Back link ── */
-.back {
-  color: rgba(255,255,255,0.4);
-  text-decoration: none;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  transition: color 0.2s;
-  margin-top: 0.5rem;
-}
-
-.back:hover { color: #ffffff; }
-
 @keyframes breathe {
-  0%, 100% { transform: scale(1);    opacity: 1; }
+  0%, 100% { transform: scale(1);     opacity: 1; }
   50%       { transform: scale(1.03); opacity: 0.85; }
 }
 
