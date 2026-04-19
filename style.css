@@ -76,6 +76,12 @@ nav a:hover { color: var(--foreground-color); }
 
 .coming-soon { opacity: 0.6; }
 
+.tagline {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-bold);
+  opacity: 0.6;
+}
+
 .rule {
   display: flex;
   align-items: center;
