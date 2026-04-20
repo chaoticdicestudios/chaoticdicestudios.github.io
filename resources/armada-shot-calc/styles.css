@@ -81,7 +81,7 @@ ul     { list-style: none; }
   --font-size-question:         1.11rem;   /* question heading h2 */
   --font-size-normal-numbers:   0.94rem;   /* modifier pill value, breakdown total, option label, breakdown row modifier */
   --font-size-body:             0.89rem;   /* general body, notes, roll suffix, buttons */
-  --font-size-body-small:       0.83rem;   /* option desc, q-subtext */
+  --font-size-body-small:       0.82rem;   /* option desc, q-subtext */
   --font-size-label:            0.73rem;   /* progress label, result heading, nav buttons */
   --font-size-label-sm:         0.68rem;   /* step label, section titles */
 
