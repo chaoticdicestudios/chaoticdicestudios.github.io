@@ -480,4 +480,5 @@ function restart() {
  */
 (function init() {
   renderQuestion(QUESTIONS[0]);
+  document.getElementById('appVersion').textContent = APP_VERSION;
 }());
