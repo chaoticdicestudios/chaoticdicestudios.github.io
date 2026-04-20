@@ -1,5 +1,4 @@
-importScripts('version.js');
-const CACHE_NAME = `armada-calc-v${APP_VERSION}`;
+const CACHE_NAME = 'armada-calc-v1.0.8';
 const FONT_CACHE_NAME = 'google-fonts-cache';
 
 const ASSETS = [
