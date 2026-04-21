@@ -1,4 +1,7 @@
-const CACHE_NAME = 'armada-calc-v1.0.8';
+const urlParams = new URLSearchParams(location.search);
+const VERSION = urlParams.get('v') || '1.0.0';
+
+const CACHE_NAME = `armada-calc-v${VERSION}`;
 const FONT_CACHE_NAME = 'google-fonts-cache';
 
 const ASSETS = [
@@ -71,6 +74,23 @@ async function handleFontRequest(request) {
 }
 
 async function handleLocalRequest(request) {
-  const cachedResponse = await caches.match(request);
-  return cachedResponse || fetch(request);
+
+  const cache = await caches.open(CACHE_NAME);
+
+  try {
+    const networkResponse = await fetch(request);
+    
+    if (networkResponse.ok) {
+      cache.put(request, networkResponse.clone());
+      return networkResponse;
+    }
+  } catch (error) {
+    const scopedCachedResponse = await cache.match(request);
+    
+    if (scopedCachedResponse) {
+      return scopedCachedResponse;
+    }
+  }
+
+  return new Response("Not found", { status: 404 });
 }
