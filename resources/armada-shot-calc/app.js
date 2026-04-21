@@ -22,18 +22,10 @@
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register(`./sw.js?v=${APP_VERSION}`)
+    navigator.serviceWorker.register('./sw.js')
       .catch((error) => {
         console.error('ServiceWorker registration failed:', error);
       });
-  });
-
-  let refreshing = false;
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (!refreshing) {
-      window.location.reload();
-      refreshing = true;
-    }
   });
 }
 
@@ -488,5 +480,4 @@ function restart() {
  */
 (function init() {
   renderQuestion(QUESTIONS[0]);
-  document.getElementById('appVersion').textContent = APP_VERSION;
 }());
