@@ -1,4 +1,4 @@
-const CACHE_NAME = 'armada-calc-v1.1.3';
+const CACHE_NAME = 'armada-calc-v1.1.4';
 const FONT_CACHE_NAME = 'google-fonts-cache';
 
 const ASSETS = [
@@ -32,7 +32,7 @@ self.addEventListener('fetch', (event) => {
 
   if (isGoogleFontRequest(url)) {
     event.respondWith(handleFontRequest(event.request));
-  } else {
+  } else if (url.origin === location.origin) {
     event.respondWith(handleLocalRequest(event.request));
   }
 });
