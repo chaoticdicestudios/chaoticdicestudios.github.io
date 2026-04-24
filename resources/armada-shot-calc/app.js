@@ -24,7 +24,7 @@ window.addEventListener('load', () => {
   // Allow scrollbars
   setTimeout(() => {
     document.body.classList.remove('no-scrollbars');
-  }, 500);
+  }, 3000);
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js')
