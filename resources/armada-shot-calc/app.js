@@ -5,7 +5,7 @@
  * Depends on: questions.js (must be loaded first via index.html)
  *
  * Section index:
- *   1. Service Worker Registration
+ *   1. Global Setup & PWA Install
  *   2. State
  *   3. Question Helpers
  *   4. Formatting Helpers
@@ -18,7 +18,14 @@
  */
 
 
-/* ── 1. Service Worker Registration ──────────────────────── */
+/* ── 1. Global Setup & PWA Install ──────────────────────── */
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
 window.addEventListener('load', () => {
 
   if ('serviceWorker' in navigator) {
@@ -466,6 +473,22 @@ function goBack() {
 }
 
 /**
+ * Called on Android to prompt the user to install the web app as a PWA.
+ */
+function displayAndroidNativePwaInstallPromptIfPossible() {
+  const hasBeenPrompted = localStorage.getItem('armadaInstallPrompted');
+
+  if (!hasBeenPrompted && deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        deferredPrompt = null;
+      });
+
+      localStorage.setItem('armadaInstallPrompted', 'true');
+  }
+}
+
+/**
  * Called when the user taps Reset (or "Calculate Another Shot" on the result screen).
  * Clears all answers and returns to the first question.
  */
@@ -473,12 +496,13 @@ function restart() {
   state.answers = {};
   state.history = [];
 
+  displayAndroidNativePwaInstallPromptIfPossible();
+
   transition('backward', () => {
     document.getElementById('progressContainer').classList.remove('hidden');
     renderQuestion(QUESTIONS[0]);
   });
 }
-
 
 /* ── 10. Init ─────────────────────────────────────────────── */
 
