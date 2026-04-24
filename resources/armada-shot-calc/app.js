@@ -21,17 +21,18 @@
 /* ── 1. Service Worker Registration ──────────────────────── */
 window.addEventListener('load', () => {
 
-  // Allow scrollbars
-  setTimeout(() => {
-    document.body.classList.remove('no-scrollbars');
-  }, 3000);
-
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js')
       .catch((error) => {
         console.error('ServiceWorker registration failed:', error);
       });
   }
+
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      document.body.classList.remove('no-scrollbars');
+    }, 1000); 
+  });
 });
 
 /* ── 2. State ─────────────────────────────────────────────── */

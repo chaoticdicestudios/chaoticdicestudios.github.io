@@ -624,10 +624,12 @@ html, body {
 .hidden { display: none !important; }
 
 .no-scrollbars {
-  /* For Firefox */
+  overflow: hidden !important; 
+  height: 100vh !important;
+  width: 100vw;
+  position: fixed;
   scrollbar-width: none; 
-  /* For Chrome, Safari, and Opera (Android PWA) */
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
 }
 
 .no-scrollbars::-webkit-scrollbar {
