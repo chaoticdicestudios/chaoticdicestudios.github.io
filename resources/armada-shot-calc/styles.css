@@ -116,8 +116,6 @@ html, body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;      /* Stops the horizontal flash during slide animations */
-  overflow-y: auto;        /* Allows vertical scrolling if content is long */
-  scrollbar-gutter: stable; /* Keeps the layout from shifting on desktop */
 }
 
 .app {
@@ -624,3 +622,14 @@ html, body {
 
 /* ── 20. Utility ──────────────────────────────────────────── */
 .hidden { display: none !important; }
+
+.no-scrollbars {
+  /* For Firefox */
+  scrollbar-width: none; 
+  /* For Chrome, Safari, and Opera (Android PWA) */
+  -ms-overflow-style: none; 
+}
+
+.no-scrollbars::-webkit-scrollbar {
+  display: none;
+}

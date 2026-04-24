@@ -19,15 +19,20 @@
 
 
 /* ── 1. Service Worker Registration ──────────────────────── */
+window.addEventListener('load', () => {
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
+  // Allow scrollbars
+  setTimeout(() => {
+    document.body.classList.remove('no-scrollbars');
+  }, 500);
+
+  if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js')
       .catch((error) => {
         console.error('ServiceWorker registration failed:', error);
       });
-  });
-}
+  }
+});
 
 /* ── 2. State ─────────────────────────────────────────────── */
 
