@@ -4,21 +4,9 @@
  * Armada Shot Calc — application logic.
  * Depends on: questions.js (must be loaded first via index.html)
  *
- * Section index:
- *   1. Global Setup & PWA Install
- *   2. State
- *   3. Question Helpers
- *   4. Formatting Helpers
- *   5. Calculation
- *   6. Transition
- *   7. Rendering — Question
- *   8. Rendering — Result
- *   9. Navigation
- *  10. Init
- */
+*/
 
-
-/* ── 1. Global Setup & PWA Install ──────────────────────── */
+/* --- 1. Global Setup & PWA Install --- */
 let deferredPrompt = null;
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -43,7 +31,7 @@ window.addEventListener('load', () => {
   });
 });
 
-/* ── 2. State ─────────────────────────────────────────────── */
+/* --- 2. State --- */
 
 /**
  * Central app state.
@@ -56,7 +44,7 @@ const state = {
 };
 
 
-/* ── 3. Question Helpers ──────────────────────────────────── */
+/* --- 3. Question Helpers --- */
 
 /**
  * Returns the first unanswered active question, or null if all are answered.
@@ -76,7 +64,7 @@ function getQuestionById(id) {
 }
 
 
-/* ── 4. Formatting Helpers ────────────────────────────────── */
+/* --- 4. Formatting Helpers --- */
 
 /**
  * Formats a modifier number as a signed string.
@@ -116,7 +104,7 @@ function badgeClass(n) {
 }
 
 
-/* ── 5. Calculation ───────────────────────────────────────── */
+/* --- 5. Calculation --- */
 
 /**
  * Calculates the shot result from the current state.answers.
@@ -183,7 +171,7 @@ function calculateResult() {
 }
 
 
-/* ── 6. Transition ────────────────────────────────────────── */
+/* --- 6. Transition --- */
 
 /**
  * Animates the main content area out, calls the callback to update the DOM,
@@ -209,7 +197,7 @@ function transition(direction, callback) {
 }
 
 
-/* ── 7. Rendering — Question ──────────────────────────────── */
+/* --- 7. Rendering — Question --- */
 
 /**
  * Builds the HTML for a single option button.
@@ -278,7 +266,7 @@ function renderQuestion(question) {
 }
 
 
-/* ── 8. Rendering — Result ────────────────────────────────── */
+/* --- 8. Rendering — Result --- */
 
 /**
  * Builds the roll display HTML (the large number at the top of the result card).
@@ -438,7 +426,7 @@ function renderResult() {
 }
 
 
-/* ── 9. Navigation ────────────────────────────────────────── */
+/* --- 9. Navigation --- */
 
 /**
  * Called when the user selects an option.
@@ -504,7 +492,7 @@ function restart() {
   });
 }
 
-/* ── 10. Init ─────────────────────────────────────────────── */
+/* --- 10. Init --- */
 
 /**
  * Entry point — renders the first question on page load.
