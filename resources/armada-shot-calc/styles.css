@@ -78,6 +78,10 @@ ul     { list-style: none; }
   --duration-out:  160ms;
   --duration-in:   220ms;
   --easing:        cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Scale */
+  --scale-hover:   1.1;   /* hover zoom — icons and logos */
+  --scale-active:  0.97;  /* press feedback — all buttons */
 }
 
 
@@ -126,7 +130,7 @@ html, body {
 }
 
 .header-ship-icon:hover {
-  transform: scale(1.1);
+  transform: scale(var(--scale-hover));
   filter: drop-shadow(0 0 15px var(--color-glow-hover));
 }
 
@@ -299,7 +303,7 @@ html, body {
 }
 
 .option-btn:hover  { background: rgba(255, 255, 255, 0.08); border-color: var(--color-border-hover); }
-.option-btn:active { transform: scale(0.985); background: rgba(255, 255, 255, 0.11); }
+.option-btn:active { transform: scale(var(--scale-active)); background: rgba(255, 255, 255, 0.11); }
 
 .option-text-group { flex: 1; min-width: 0; }
 
@@ -495,7 +499,7 @@ html, body {
 }
 
 .btn-restart:hover  { background: var(--color-white); box-shadow: 0 4px 20px rgba(255, 255, 255, 0.18); }
-.btn-restart:active { transform: scale(0.98); }
+.btn-restart:active { transform: scale(var(--scale-active)); }
 
 
 /* --- 17. Navigation Row (Back / Reset) --- */
@@ -522,7 +526,7 @@ html, body {
 }
 
 .btn-nav:hover  { color: var(--color-white); border-color: var(--color-border-hover); }
-.btn-nav:active { transform: scale(0.97); }
+.btn-nav:active { transform: scale(var(--scale-active)); }
 
 
 /* 18. Footer ───────────────────────────────────────────── */
@@ -545,7 +549,7 @@ html, body {
 }
 
 .footer-logo-link:hover { 
-  transform: scale(1.1);
+  transform: scale(var(--scale-hover));
   filter: drop-shadow(0 0 15px var(--color-glow-hover)); 
 }
 
