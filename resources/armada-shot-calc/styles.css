@@ -12,8 +12,6 @@ ul     { list-style: none; }
   --color-bg-gradient-2:  #02080f;   /* bottom of page gradient */
   --color-bg-card:        #0f243a;   /* card surface */
   --color-border-card:    rgba(255, 255, 255, 0.10);
-  --color-border-subtle:  rgba(255, 255, 255, 0.06);
-  --color-border-divider: rgba(255, 255, 255, 0.07);  /* hairline dividers, tracks, separators */
   --color-border-hover:   rgba(255, 255, 255, 0.22);  /* hover-state border highlight */
   --color-glow-soft:      rgba(255, 255, 255, 0.15);  /* resting icon / logo drop-shadow */
   --color-glow-hover:     rgba(255, 255, 255, 0.30);  /* hover icon / logo drop-shadow */
@@ -31,11 +29,10 @@ ul     { list-style: none; }
   /* Semantic colours — modifier badges and notes */
   --color-positive:       #6fdc9a;   /* positive modifier */
   --color-negative:       #ff7a7a;   /* negative modifier / impossible */
-  --color-warning:        #f2a65a;   /* amber warning */
+  --color-warning:        #f2a65a;   /* amber warning — also used for warn note text */
   --color-info:           #6ea8dc;   /* indirect weapon note */
 
   /* Semantic note text colours — foreground text inside each note variant */
-  --color-text-warn:      #f2a65a;
   --color-text-danger:    #ff9a9a;
   --color-text-info:      #8fc2ff;
 
@@ -117,7 +114,7 @@ html, body {
 .app-header {
   text-align: center;
   padding: 28px var(--space-lg) var(--space-lg);
-  border-bottom: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-white-ghost);
   flex-shrink: 0;
 }
 
@@ -125,7 +122,7 @@ html, body {
   display: inline-block;
   margin-bottom: 12px;
   filter: drop-shadow(0 0 12px var(--color-glow-soft));
-  transition: transform 0.2s ease; /* Adds a nice feel when hovering */
+  transition: transform var(--duration-in) ease; /* Adds a nice feel when hovering */
   text-decoration: none;
 }
 
@@ -199,7 +196,7 @@ html, body {
 
 .progress-track {
   height: 2px;
-  background: var(--color-border-divider);
+  background: var(--color-white-ghost);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -296,7 +293,7 @@ html, body {
   padding: 13px 15px;
   text-align: left;
   background: var(--color-white-ghost);
-  border: 1px solid var(--color-border-divider);
+  border: 1px solid var(--color-white-ghost);
   border-radius: var(--radius-md);
   transition: background 140ms ease, border-color 140ms ease, transform 80ms ease;
   -webkit-tap-highlight-color: transparent;
@@ -365,7 +362,7 @@ html, body {
   text-align: center;
   padding: 16px 0 var(--space-lg);
   margin-bottom: var(--space-lg);
-  border-bottom: 1px solid var(--color-border-divider);
+  border-bottom: 1px solid var(--color-white-ghost);
 }
 
 .roll-label {
@@ -450,7 +447,7 @@ html, body {
   justify-content: space-between;
   align-items: center;
   padding: var(--space-sm) 10px 0;
-  border-top: 1px solid var(--color-border-divider);
+  border-top: 1px solid var(--color-white-ghost);
   margin-top: 3px;
 }
 
@@ -474,7 +471,7 @@ html, body {
 
 /* Note colour variants */
 .note-white  { border-color: var(--color-border-hover); color: var(--color-text-dim);   background: rgba(255, 255, 255, 0.035); }
-.note-warn   { border-color: var(--color-warning);      color: var(--color-text-warn);  background: var(--color-bg-warning);    }
+.note-warn   { border-color: var(--color-warning);      color: var(--color-warning);  background: var(--color-bg-warning);    }
 .note-danger { border-color: var(--color-negative);     color: var(--color-text-danger); background: var(--color-bg-negative);  }
 .note-info   { border-color: var(--color-info);         color: var(--color-text-info);  background: var(--color-bg-info);       }
 
@@ -533,7 +530,7 @@ html, body {
 .app-footer {
   text-align: center;
   padding: var(--space-lg) 16px 28px;
-  border-top: 1px solid var(--color-border-subtle);
+  border-top: 1px solid var(--color-white-ghost);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -543,7 +540,7 @@ html, body {
 
 .footer-logo-link {
   display: inline-block;
-  transition: transform 0.2s ease;
+  transition: transform var(--duration-in) ease;
   filter: drop-shadow(0 0 12px var(--color-glow-soft));
   text-decoration: none;
 }
