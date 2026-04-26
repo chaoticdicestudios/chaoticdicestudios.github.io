@@ -1,4 +1,3 @@
-
 /* --- 1. Setup --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 button { font: inherit; cursor: pointer; }
@@ -14,6 +13,10 @@ ul     { list-style: none; }
   --color-bg-card:        #0f243a;   /* card surface */
   --color-border-card:    rgba(255, 255, 255, 0.10);
   --color-border-subtle:  rgba(255, 255, 255, 0.06);
+  --color-border-divider: rgba(255, 255, 255, 0.07);  /* hairline dividers, tracks, separators */
+  --color-border-hover:   rgba(255, 255, 255, 0.22);  /* hover-state border highlight */
+  --color-glow-soft:      rgba(255, 255, 255, 0.15);  /* resting icon / logo drop-shadow */
+  --color-glow-hover:     rgba(255, 255, 255, 0.30);  /* hover icon / logo drop-shadow */
 
   /* White scale — used for text and accents */
   --color-white:          #ffffff;
@@ -117,14 +120,14 @@ html, body {
 .header-ship-icon {
   display: inline-block;
   margin-bottom: 12px;
-  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+  filter: drop-shadow(0 0 12px var(--color-glow-soft));
   transition: transform 0.2s ease; /* Adds a nice feel when hovering */
   text-decoration: none;
 }
 
 .header-ship-icon:hover {
   transform: scale(1.1);
-  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+  filter: drop-shadow(0 0 15px var(--color-glow-hover));
 }
 
 .header-ship-icon img {
@@ -192,7 +195,7 @@ html, body {
 
 .progress-track {
   height: 2px;
-  background: rgba(255, 255, 255, 0.07);
+  background: var(--color-border-divider);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -289,13 +292,13 @@ html, body {
   padding: 13px 15px;
   text-align: left;
   background: var(--color-white-ghost);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--color-border-divider);
   border-radius: var(--radius-md);
   transition: background 140ms ease, border-color 140ms ease, transform 80ms ease;
   -webkit-tap-highlight-color: transparent;
 }
 
-.option-btn:hover  { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.22); }
+.option-btn:hover  { background: rgba(255, 255, 255, 0.08); border-color: var(--color-border-hover); }
 .option-btn:active { transform: scale(0.985); background: rgba(255, 255, 255, 0.11); }
 
 .option-text-group { flex: 1; min-width: 0; }
@@ -358,7 +361,7 @@ html, body {
   text-align: center;
   padding: 16px 0 var(--space-lg);
   margin-bottom: var(--space-lg);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid var(--color-border-divider);
 }
 
 .roll-label {
@@ -396,7 +399,7 @@ html, body {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid var(--color-border-card);
   border-radius: var(--radius-pill);
   padding: var(--space-xs) var(--space-md);
   margin-top: var(--space-sm);
@@ -443,7 +446,7 @@ html, body {
   justify-content: space-between;
   align-items: center;
   padding: var(--space-sm) 10px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 1px solid var(--color-border-divider);
   margin-top: 3px;
 }
 
@@ -466,7 +469,7 @@ html, body {
 }
 
 /* Note colour variants */
-.note-white  { border-color: rgba(255, 255, 255, 0.22); color: var(--color-text-dim);   background: rgba(255, 255, 255, 0.035); }
+.note-white  { border-color: var(--color-border-hover); color: var(--color-text-dim);   background: rgba(255, 255, 255, 0.035); }
 .note-warn   { border-color: var(--color-warning);      color: var(--color-text-warn);  background: var(--color-bg-warning);    }
 .note-danger { border-color: var(--color-negative);     color: var(--color-text-danger); background: var(--color-bg-negative);  }
 .note-info   { border-color: var(--color-info);         color: var(--color-text-info);  background: var(--color-bg-info);       }
@@ -506,7 +509,7 @@ html, body {
 
 .btn-nav {
   background: none;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid var(--color-border-card);
   color: var(--color-text-dim);
   padding: var(--space-sm) 16px;
   border-radius: var(--radius-sm);
@@ -518,7 +521,7 @@ html, body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.btn-nav:hover  { color: var(--color-white); border-color: rgba(255, 255, 255, 0.22); }
+.btn-nav:hover  { color: var(--color-white); border-color: var(--color-border-hover); }
 .btn-nav:active { transform: scale(0.97); }
 
 
@@ -537,13 +540,13 @@ html, body {
 .footer-logo-link {
   display: inline-block;
   transition: transform 0.2s ease;
-  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+  filter: drop-shadow(0 0 12px var(--color-glow-soft));
   text-decoration: none;
 }
 
 .footer-logo-link:hover { 
   transform: scale(1.1);
-  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3)); 
+  filter: drop-shadow(0 0 15px var(--color-glow-hover)); 
 }
 
 .footer-logo-link img {
