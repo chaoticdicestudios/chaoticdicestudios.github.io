@@ -585,10 +585,10 @@ html, body {
 .hidden { display: none !important; }
 
 .no-scrollbars {
-  overflow: hidden !important; 
+  overflow: hidden !important;
   height: 100vh !important;
   width: 100vw;
-  position: fixed;
+  overscroll-behavior: none;
   scrollbar-width: none; 
   -ms-overflow-style: none;
 }
