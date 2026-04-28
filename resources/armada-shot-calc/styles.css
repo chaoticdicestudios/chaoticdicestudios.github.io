@@ -101,12 +101,12 @@ html, body {
   background:
     radial-gradient(ellipse 90% 35% at 50% 0%, var(--color-bg-gradient-1) 0%, transparent 60%),
     linear-gradient(180deg, var(--color-bg-page) 0%, var(--color-bg-gradient-2) 100%);
-  animation: appFadeIn 0.35s ease both;
+  animation: appFadeIn 0.35s ease-out both;
 }
 
 @keyframes appFadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0);   }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 
