@@ -227,7 +227,7 @@ function buildOptionHTML(question, option) {
  * @param {Question} question
  */
 function renderQuestion(question) {
-  const stepNumber      = activeQuestions.findIndex((q) => q.id === question.id) + 1;
+  const stepNumber      = QUESTIONS.findIndex((q) => q.id === question.id) + 1;
   const totalSteps      = QUESTIONS.length;
   const isFirstStep     = state.history.length === 0;
 
