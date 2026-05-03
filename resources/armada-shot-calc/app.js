@@ -24,11 +24,9 @@ window.addEventListener('load', () => {
   }
 
   // Fix scrollbar flashing bug inside PWA
-  requestAnimationFrame(() => {
-    setTimeout(() => {
+  setTimeout(() => {
       document.body.classList.remove('no-scrollbars');
     }, 1000); 
-  });
 });
 
 /* --- 2. State --- */
