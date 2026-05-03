@@ -92,7 +92,7 @@ const QUESTIONS = [
       { label: 'Tiny',                desc: 'Very difficult to hit',        value: 'tiny',     modifier: -2 },
       { label: 'Small',               desc: 'Difficult to hit',             value: 'small',    modifier: -1 },
       { label: 'Medium',              desc: 'Standard difficulty to hit',            value: 'medium',   modifier:  0 },
-      { label: 'Large / Extra Large', desc: 'Easeir to hit',        value: 'large',    modifier: +1 },
+      { label: 'Large / Extra Large', desc: 'Easier to hit',        value: 'large',    modifier: +1 },
     ],
   },
 

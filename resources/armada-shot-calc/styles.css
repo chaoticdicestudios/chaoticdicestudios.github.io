@@ -564,7 +564,7 @@ html, body {
 }
 
 
-/* --- 20. Responsive — Tablet / Desktop --- */
+/* --- 19. Responsive — Tablet / Desktop --- */
 @media (min-width: 480px) {
   :root {
     --font-size-title:    2.2rem;
@@ -582,7 +582,6 @@ html, body {
     --font-size-title: 2.6rem;
   }
   .app-header             { padding: 36px var(--space-lg) 26px; }
-  .header-ship-icon svg   { width: 66px; height: 66px; }
   .footer-logo-link img   { width: 170px; }
 }
 

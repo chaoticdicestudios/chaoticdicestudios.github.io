@@ -229,9 +229,8 @@ function buildOptionHTML(question, option) {
  * @param {Question} question
  */
 function renderQuestion(question) {
-  const activeQuestions = QUESTIONS;
   const stepNumber      = activeQuestions.findIndex((q) => q.id === question.id) + 1;
-  const totalSteps      = activeQuestions.length;
+  const totalSteps      = QUESTIONS.length;
   const isFirstStep     = state.history.length === 0;
 
   // Update progress bar
@@ -468,7 +467,7 @@ function displayAndroidNativePwaInstallPromptIfPossible() {
 
   if (!hasBeenPrompted && deferredPrompt) {
       deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
+      deferredPrompt.userChoice.then(() => {
         deferredPrompt = null;
       });
 
