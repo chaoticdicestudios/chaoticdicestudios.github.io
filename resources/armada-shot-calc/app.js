@@ -486,7 +486,6 @@ function restart() {
   displayAndroidNativePwaInstallPromptIfPossible();
 
   transition('backward', () => {
-    document.getElementById('progressContainer').classList.remove('hidden');
     renderQuestion(QUESTIONS[0]);
   });
 }
