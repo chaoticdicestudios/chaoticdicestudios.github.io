@@ -10,11 +10,20 @@ ul     { list-style: none; }
   --color-bg-page:        #050e1c;   /* deepest background, also used for PWA theme */
   --color-bg-gradient-1:  #0f2a4a;  /* radial highlight at top of .app */
   --color-bg-gradient-2:  #02080f;   /* bottom of page gradient */
-  --color-bg-card:        #0f243a;   /* card surface */
-  --color-border-card:    rgba(255, 255, 255, 0.10);
-  --color-border-hover:   rgba(255, 255, 255, 0.22);  /* hover-state border highlight */
+  --color-bg-card:        #0c1e30;   /* card surface — slightly deeper, less vibrant */
+  --color-border-card:    rgba(255, 255, 255, 0.09);
+  --color-border-hover:   rgba(200, 169, 110, 0.50);  /* brass on hover */
   --color-glow-soft:      rgba(255, 255, 255, 0.15);  /* resting icon / logo drop-shadow */
-  --color-glow-hover:     rgba(255, 255, 255, 0.30);  /* hover icon / logo drop-shadow */
+  --color-glow-hover:     rgba(200, 169, 110, 0.40);  /* brass hover glow */
+
+  /* Brass / gold accent — naval instrument-panel feel */
+  --color-accent:         #c8a96e;
+  --color-accent-light:   #d9bb82;              /* lighter brass — hover state for primary button */
+  --color-accent-dim:     rgba(200, 169, 110, 0.30);
+  --color-accent-faint:   rgba(200, 169, 110, 0.10);
+
+  /* Card background texture — repeating diagonal line pattern */
+  --color-card-texture:   rgba(255, 255, 255, 0.013);
 
   /* White scale — used for text and accents */
   --color-white:          #ffffff;
@@ -65,11 +74,12 @@ ul     { list-style: none; }
   --space-xl:   26px;
   --space-2xl:  32px;
 
-  /* Shape */
-  --radius-sm:  8px;
-  --radius-md:  10px;
-  --radius-lg:  16px;
-  --radius-pill: 20px;
+  /* Shape — angular / naval */
+  --radius-sm:   2px;
+  --radius-md:   2px;
+  --radius-lg:   2px;
+  --radius-pill: 2px;
+  --chamfer:     11px;
 
   /* Motion */
   --duration-out:  160ms;
@@ -195,28 +205,75 @@ html, body {
 }
 
 .progress-track {
-  height: 2px;
+  height: 4px;
   background: var(--color-white-ghost);
-  border-radius: 2px;
+  border-radius: 0;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: rgba(255, 255, 255, 0.65);
-  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-accent-dim) 100%);
+  border-radius: 0;
   transition: width 0.4s var(--easing);
 }
 
 
 /* --- 7. Card --- */
+
+/* Chamfered top-left corner using a double-layer technique:
+   Outer clip sets the shape and exposes a 1px edge of --color-accent-dim (the "border").
+   ::before is the actual card fill, inset by 1px on the chamfered edges. */
 .card {
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border-card);
-  border-radius: var(--radius-lg);
+  position: relative;
+  background: var(--color-accent-dim);          /* 1px exposed edge acts as the border */
+  clip-path: polygon(
+    var(--chamfer) 0%,
+    100%           0%,
+    100%           100%,
+    0%             100%,
+    0%             var(--chamfer)
+  );
   box-shadow:
-    0 2px 24px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    0 4px 32px rgba(0, 0, 0, 0.55),
+    0 1px 0 var(--color-accent-faint);
+  isolation: isolate;
+}
+
+/* Inner card fill — 1px inset so the outer accent-dim edge shows along the chamfer */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background:
+    repeating-linear-gradient(
+      -52deg,
+      transparent,
+      transparent 22px,
+      var(--color-card-texture) 22px,
+      var(--color-card-texture) 23px
+    ),
+    var(--color-bg-card);
+  clip-path: polygon(
+    calc(var(--chamfer) - 1px) 0%,
+    100%                        0%,
+    100%                        100%,
+    0%                          100%,
+    0%                          calc(var(--chamfer) - 1px)
+  );
+  z-index: -1;
+}
+
+/* Brass top-rail — runs from the chamfer point across the full top edge */
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--chamfer);
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent) 0%, transparent 85%);
+  opacity: 0.55;
 }
 
 
@@ -290,17 +347,22 @@ html, body {
   gap: 10px;
   width: 100%;
   min-height: 56px;
-  padding: 13px 15px;
+  padding: 13px 15px 13px 13px;
   text-align: left;
   background: var(--color-white-ghost);
-  border: 1px solid var(--color-white-ghost);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-card);
+  border-left: 3px solid transparent;
+  border-radius: 0;
   transition: background 140ms ease, border-color 140ms ease, transform 80ms ease;
   -webkit-tap-highlight-color: transparent;
 }
 
-.option-btn:hover  { background: rgba(255, 255, 255, 0.08); border-color: var(--color-border-hover); }
-.option-btn:active { transform: scale(var(--scale-active)); background: rgba(255, 255, 255, 0.11); }
+.option-btn:hover  {
+  background: var(--color-accent-faint);
+  border-color: var(--color-border-card);
+  border-left-color: var(--color-accent);
+}
+.option-btn:active { transform: scale(var(--scale-active)); background: var(--color-accent-faint); }
 
 .option-text-group { flex: 1; min-width: 0; }
 
@@ -311,7 +373,10 @@ html, body {
   font-weight: 600;
   color: var(--color-white);
   margin-bottom: 2px;
+  transition: color 140ms ease;
 }
+
+.option-btn:hover .option-label { color: var(--color-accent); }
 
 .option-desc {
   display: block;
@@ -400,8 +465,8 @@ html, body {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  border: 1px solid var(--color-border-card);
-  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-accent-dim);
+  border-radius: 0;
   padding: var(--space-xs) var(--space-md);
   margin-top: var(--space-sm);
   font-size: var(--font-size-body);
@@ -435,8 +500,9 @@ html, body {
   justify-content: space-between;
   align-items: center;
   padding: 6px 10px;
-  background: var(--color-white-ghost);
-  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.035);
+  border-left: 2px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0;
 }
 
 .breakdown-row-label { font-family: var(--font-body); font-size: var(--font-size-body); color: var(--color-text); }
@@ -465,8 +531,8 @@ html, body {
   font-size: var(--font-size-body);
   line-height: 1.55;
   padding: 9px 12px;
-  border-radius: 0 7px 7px 0;
-  border-left: 2px solid;
+  border-radius: 0;
+  border-left: 3px solid;
 }
 
 /* Note colour variants */
@@ -481,11 +547,11 @@ html, body {
 /* --- 16. Restart Button (inside result card) --- */
 .btn-restart {
   width: 100%;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--color-accent);
   border: none;
   color: var(--color-bg-page);
   padding: var(--space-md) var(--space-lg);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   font-family: var(--font-ui);
   font-size: var(--font-size-body);
   font-weight: 700;
@@ -495,7 +561,7 @@ html, body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.btn-restart:hover  { background: var(--color-white); box-shadow: 0 4px 20px rgba(255, 255, 255, 0.18); }
+.btn-restart:hover  { background: var(--color-accent-light); box-shadow: 0 4px 20px var(--color-accent-dim); }
 .btn-restart:active { transform: scale(var(--scale-active)); }
 
 
@@ -513,7 +579,7 @@ html, body {
   border: 1px solid var(--color-border-card);
   color: var(--color-text-dim);
   padding: var(--space-sm) 16px;
-  border-radius: var(--radius-sm);
+  border-radius: 0;
   font-family: var(--font-ui);
   font-size: var(--font-size-label);
   font-weight: 600;
@@ -522,7 +588,7 @@ html, body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.btn-nav:hover  { color: var(--color-white); border-color: var(--color-border-hover); }
+.btn-nav:hover  { color: var(--color-accent); border-color: var(--color-accent-dim); }
 .btn-nav:active { transform: scale(var(--scale-active)); }
 
 
