@@ -18,7 +18,7 @@ ul     { list-style: none; }
 
   /* Brass / gold accent — naval instrument-panel feel */
   --color-accent:         #c8a96e;
-  --color-accent-light:   #d9bb82;              /* lighter brass — hover state for primary button */
+  --color-accent-light:   #d9bb82;             
   --color-accent-dim:     rgba(200, 169, 110, 0.30);
   --color-accent-faint:   rgba(200, 169, 110, 0.10);
 
@@ -74,7 +74,7 @@ ul     { list-style: none; }
   --space-xl:   26px;
   --space-2xl:  32px;
 
-  /* Shape — angular / naval */
+  /* Shapes */
   --radius-sm:   2px;
   --radius-md:   2px;
   --radius-lg:   2px;
@@ -134,11 +134,6 @@ html, body {
   filter: drop-shadow(0 0 12px var(--color-glow-soft));
   transition: transform var(--duration-in) ease; /* Adds a nice feel when hovering */
   text-decoration: none;
-}
-
-.header-ship-icon:hover {
-  transform: scale(var(--scale-hover));
-  filter: drop-shadow(0 0 15px var(--color-glow-hover));
 }
 
 .header-ship-icon img {
@@ -234,9 +229,7 @@ html, body {
     0%             100%,
     0%             var(--chamfer)
   );
-  box-shadow:
-    0 4px 32px rgba(0, 0, 0, 0.55),
-    0 1px 0 var(--color-accent-faint);
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.55));
   isolation: isolate;
 }
 
@@ -357,12 +350,11 @@ html, body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.option-btn:hover  {
+.option-btn:active {
+  transform: scale(var(--scale-active));
   background: var(--color-accent-faint);
-  border-color: var(--color-border-card);
   border-left-color: var(--color-accent);
 }
-.option-btn:active { transform: scale(var(--scale-active)); background: var(--color-accent-faint); }
 
 .option-text-group { flex: 1; min-width: 0; }
 
@@ -375,8 +367,6 @@ html, body {
   margin-bottom: 2px;
   transition: color 140ms ease;
 }
-
-.option-btn:hover .option-label { color: var(--color-accent); }
 
 .option-desc {
   display: block;
@@ -501,7 +491,7 @@ html, body {
   align-items: center;
   padding: 6px 10px;
   background: rgba(255, 255, 255, 0.035);
-  border-left: 2px solid rgba(255, 255, 255, 0.06);
+  border-left: 2px solid var(--color-white-ghost);
   border-radius: 0;
 }
 
@@ -561,8 +551,7 @@ html, body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.btn-restart:hover  { background: var(--color-accent-light); box-shadow: 0 4px 20px var(--color-accent-dim); }
-.btn-restart:active { transform: scale(var(--scale-active)); }
+.btn-restart:active { transform: scale(var(--scale-active)); background: var(--color-accent-light); }
 
 
 /* --- 17. Navigation Row (Back / Reset) --- */
@@ -588,8 +577,11 @@ html, body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.btn-nav:hover  { color: var(--color-accent); border-color: var(--color-accent-dim); }
-.btn-nav:active { transform: scale(var(--scale-active)); }
+.btn-nav:active {
+  transform: scale(var(--scale-active));
+  color: var(--color-accent);
+  border-color: var(--color-accent-dim);
+}
 
 
 /* 18. Footer ───────────────────────────────────────────── */
@@ -611,11 +603,6 @@ html, body {
   text-decoration: none;
 }
 
-.footer-logo-link:hover { 
-  transform: scale(var(--scale-hover));
-  filter: drop-shadow(0 0 15px var(--color-glow-hover)); 
-}
-
 .footer-logo-link img {
   width: 140px;
   height: auto;
@@ -630,7 +617,44 @@ html, body {
 }
 
 
-/* --- 19. Responsive — Tablet / Desktop --- */
+/* --- 19. Hover states — pointer devices only ---
+   Gated behind (hover: hover) and (pointer: fine) so these rules never fire
+   on touch screens, preventing the sticky-hover bug on mobile.
+   Touch devices use the :active states above exclusively. */
+@media (hover: hover) and (pointer: fine) {
+
+  .header-ship-icon:hover {
+    transform: scale(var(--scale-hover));
+    filter: drop-shadow(0 0 15px var(--color-glow-hover));
+  }
+
+  .option-btn:hover {
+    background: var(--color-accent-faint);
+    border-color: var(--color-border-card);
+    border-left-color: var(--color-accent);
+  }
+
+  .option-btn:hover .option-label { color: var(--color-accent); }
+
+  .btn-restart:hover {
+    background: var(--color-accent-light);
+    box-shadow: 0 4px 20px var(--color-accent-dim);
+  }
+
+  .btn-nav:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent-dim);
+  }
+
+  .footer-logo-link:hover {
+    transform: scale(var(--scale-hover));
+    filter: drop-shadow(0 0 15px var(--color-glow-hover));
+  }
+
+}
+
+
+/* --- 20. Responsive — Tablet / Desktop --- */
 @media (min-width: 480px) {
   :root {
     --font-size-title:    2.2rem;
@@ -640,7 +664,7 @@ html, body {
   .app-main               { padding: 28px var(--space-lg) 24px; }
   .question-card,
   .result-card            { padding: var(--space-2xl) 28px 28px; }
-  .option-btn             { padding: var(--space-md) 18px; }
+  .option-btn             { padding: var(--space-md) 18px var(--space-md) 13px; } /* preserve left padding for 3px border */
 }
 
 @media (min-width: 768px) {
@@ -652,7 +676,7 @@ html, body {
 }
 
 
-/* --- 20. Utility --- */
+/* --- 21. Utility --- */
 .hidden { display: none !important; }
 
 .no-scrollbars {
