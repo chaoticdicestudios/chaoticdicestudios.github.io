@@ -1,6 +1,12 @@
 /* --- 1. Setup --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-button { font: inherit; cursor: pointer; }
+button {
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;       /* long press fires click, not gesture recognition */
+  -webkit-touch-callout: none;      /* suppresses iOS copy/share callout on long press */
+  user-select: none;                /* prevents text selection swallowing the tap */
+}
 ul     { list-style: none; }
 
 

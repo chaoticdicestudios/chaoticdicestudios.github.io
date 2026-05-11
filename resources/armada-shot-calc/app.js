@@ -29,6 +29,9 @@ window.addEventListener('load', () => {
     }, 1000); 
 });
 
+// Suppress longclick context menu
+document.addEventListener('contextmenu', (e) => e.preventDefault());
+
 /* --- 2. State --- */
 
 /**
