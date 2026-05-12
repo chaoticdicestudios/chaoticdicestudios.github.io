@@ -341,12 +341,6 @@ function buildBreakdownHTML(result) {
     <div class="breakdown-section">
       <p class="section-title">Modifier Breakdown</p>
       <ul class="breakdown-list">${rowsHTML}</ul>
-      <div class="breakdown-total-row">
-        <span class="total-label">Total modifier</span>
-        <span class="total-value ${modifierClass(result.totalModifier)}">
-          ${formatModifier(result.totalModifier)}
-        </span>
-      </div>
     </div>
   `;
 }

@@ -447,8 +447,8 @@ html, body {
 /* --- 13. Modifier Pill --- */
 .modifier-pill-wrap {
   text-align: center;
-  margin-top: -4px;
-  margin-bottom: var(--space-xs);
+  margin-top: 0;
+  margin-bottom: var(--space-md);
 }
 
 .modifier-pill {
@@ -458,7 +458,6 @@ html, body {
   border: 1px solid var(--color-accent-dim);
   border-radius: 0;
   padding: var(--space-xs) var(--space-md);
-  margin-top: var(--space-sm);
   font-size: var(--font-size-body);
 }
 
@@ -497,18 +496,6 @@ html, body {
 
 .breakdown-row-label { font-family: var(--font-body); font-size: var(--font-size-body); color: var(--color-text); }
 .breakdown-row-mod   { font-family: var(--font-ui); font-size: var(--font-size-normal-numbers); font-weight: 700; }
-
-.breakdown-total-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--space-sm) 10px 0;
-  border-top: 1px solid var(--color-white-ghost);
-  margin-top: 3px;
-}
-
-.breakdown-total-row .total-label { font-family: var(--font-body); font-size: var(--font-size-body); color: var(--color-text-dim); font-style: italic; }
-.breakdown-total-row .total-value { font-family: var(--font-ui); font-size: var(--font-size-normal-numbers); font-weight: 700; }
 
 .no-modifiers { font-family: var(--font-body); font-size: var(--font-size-body); color: var(--color-text-dim); font-style: italic; padding: 6px 10px; }
 
