@@ -353,7 +353,6 @@ html, body {
 .option-btn:active {
   transform: scale(var(--scale-active));
   background: var(--color-accent-faint);
-  border-left-color: var(--color-accent);
 }
 
 .option-text-group { flex: 1; min-width: 0; }
@@ -620,6 +619,8 @@ html, body {
     border-color: var(--color-border-card);
     border-left-color: var(--color-accent);
   }
+
+  .option-btn:active { border-left-color: var(--color-accent); }
 
   .option-btn:hover .option-label { color: var(--color-accent); }
 
