@@ -95,6 +95,7 @@ nav a:hover { color: var(--foreground-color); }
   font-weight: var(--font-weight-bold);
   opacity: 0.6;
   text-align: center;
+  margin-top: 0.5rem;
 }
 
 .rule {
@@ -102,6 +103,7 @@ nav a:hover { color: var(--foreground-color); }
   align-items: center;
   gap: 0.75rem;
   width: min(260px, 60vw);
+  margin-top: 1rem;
 }
 
 .rule::before, .rule::after {
