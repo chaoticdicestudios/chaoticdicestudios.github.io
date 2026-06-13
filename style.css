@@ -66,7 +66,6 @@ nav a:hover { color: var(--foreground-color); }
   align-items: center;
   gap: 1rem;
   padding: calc(var(--nav-padding) * 2 + var(--stage-top-gap)) var(--stage-padding) var(--stage-padding);
-  animation: fadein 1s ease both;
   position: relative;
   z-index: 0;
 }
@@ -75,7 +74,6 @@ nav a:hover { color: var(--foreground-color); }
   width: min(560px, 85vw);
   height: auto;
   display: block;
-  animation: breathe 4s ease-in-out infinite;
 }
 
 .logo-wrap a { display: block; }
