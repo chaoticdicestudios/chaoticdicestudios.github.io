@@ -94,6 +94,7 @@ nav a:hover { color: var(--foreground-color); }
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-bold);
   opacity: 0.6;
+  text-align: center;
 }
 
 .rule {
@@ -230,4 +231,18 @@ nav a:hover { color: var(--foreground-color); }
     width: 100%;
     margin: 0 auto;
   }
+}
+
+/* ── Featured product (home page) ────────────────────────────── */
+
+.product-card--featured {
+  width: min(320px, 85vw);
+  margin-top: 1rem;
+}
+
+.product-card__title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
