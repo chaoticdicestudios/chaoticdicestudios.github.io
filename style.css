@@ -29,7 +29,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-family: system-ui, sans-serif;
 }
 
@@ -42,6 +41,7 @@ nav {
   padding: 1.25rem;
   background: var(--background-85alpha);
   backdrop-filter: blur(6px);
+  z-index: 1;
 }
 
 nav a {
@@ -60,9 +60,11 @@ nav a:hover { color: var(--foreground-color); }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  padding: 2rem;
+  gap: 1rem;
+  padding: 5rem 2rem 2rem; /* 5rem top = nav height + small gap */
   animation: fadein 1s ease both;
+  position: relative;
+  z-index: 0;
 }
 
 .logo-wrap img {
