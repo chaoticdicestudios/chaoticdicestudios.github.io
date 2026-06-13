@@ -11,6 +11,7 @@
   --text-transform-uppercase: uppercase;
   --letter-spacing-title: 0.45em;
   --letter-spacing-navigation: 0.35em;
+  --nav-padding: 1.25rem;
 
   /* Product grid */
   --product-card-radius: 14px;
@@ -38,7 +39,7 @@ nav {
   display: flex;
   justify-content: center;
   gap: 3rem;
-  padding: 1.25rem;
+  padding: var(--nav-padding);
   background: var(--background-85alpha);
   backdrop-filter: blur(6px);
   z-index: 1;
@@ -61,7 +62,7 @@ nav a:hover { color: var(--foreground-color); }
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  padding: 5rem 2rem 2rem; /* 5rem top = nav height + small gap */
+  padding: calc(var(--nav-padding) * 2 + 2rem) 2rem 2rem;
   animation: fadein 1s ease both;
   position: relative;
   z-index: 0;
