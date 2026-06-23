@@ -5,7 +5,7 @@
   --foreground-55alpha: rgba(255, 255, 255, 0.55);
   --foreground-20alpha: rgba(255, 255, 255, 0.2);
   --foreground-06alpha: rgba(255, 255, 255, 0.06);
-  --font-size-title: clamp(0.75rem, 2.5vw, 1rem);
+  --font-size-title: clamp(0.8rem, 2.5vw, 1rem);
   --font-size-nav: 0.7rem;
   --font-weight-bold: 700;
   --text-transform-uppercase: uppercase;
