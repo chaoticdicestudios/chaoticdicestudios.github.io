@@ -344,12 +344,16 @@ nav a:hover { color: var(--foreground-color); }
   .tools-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
-    padding: 0;
+    padding: 0 0.5rem;
   }
 
   .tool-card {
     max-width: 420px;
     width: 100%;
     margin: 0 auto;
+  }
+
+  .tool-card__icon img {
+    width: 140px;
   }
 }
