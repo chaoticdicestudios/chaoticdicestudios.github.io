@@ -17,11 +17,30 @@
   --stage-padding: 2rem;
 
   /* Product grid */
-  --product-card-radius: 14px;
+  --card-radius: 14px;
   --product-card-scale: 0.96;
   --font-size-product-title: 0.85rem;
   --font-size-product-price: 0.95rem;
   --font-size-product-badge: 0.6rem;
+
+  /* Extra alpha shades (tools grid, etc.) */
+  --foreground-04alpha: rgba(255, 255, 255, 0.04);
+  --foreground-07alpha: rgba(255, 255, 255, 0.07);
+  --foreground-08alpha: rgba(255, 255, 255, 0.08);
+
+  /* Accent (success / free badge) */
+  --accent-green-color: #5db87a;
+  --accent-green-15alpha: rgba(93, 184, 122, 0.15);
+  --accent-green-25alpha: rgba(93, 184, 122, 0.25);
+
+  /* Tools grid */
+  --tool-card-icon-width: 240px;
+  --font-size-tool-eyebrow: 0.65rem;
+  --font-size-tool-title: 1.1rem;
+  --font-size-tool-desc: 0.83rem;
+  --font-size-tool-badge: 0.65rem;
+  --letter-spacing-tool-label: 0.12em;
+  --letter-spacing-tool-badge: 0.09em;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -80,15 +99,12 @@ nav a:hover { color: var(--foreground-color); }
 
 .logo-wrap a { display: block; }
 
-.page-title,
-.coming-soon {
+.page-title {
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-title);
   text-transform: var(--text-transform-uppercase);
 }
-
-.coming-soon { opacity: 0.6; }
 
 .tagline {
   font-size: var(--font-size-title);
@@ -149,7 +165,7 @@ nav a:hover { color: var(--foreground-color); }
   flex-direction: column;
   background: var(--foreground-06alpha);
   border: 1px solid var(--foreground-20alpha);
-  border-radius: var(--product-card-radius);
+  border-radius: var(--card-radius);
   text-decoration: none;
   color: inherit;
   transition: transform 0.2s ease, border-color 0.2s ease;
@@ -165,7 +181,7 @@ nav a:hover { color: var(--foreground-color); }
   width: 100%;
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  border-radius: var(--product-card-radius) var(--product-card-radius) 0 0;
+  border-radius: var(--card-radius) var(--card-radius) 0 0;
 }
 
 .product-card__img-wrap img {
@@ -247,4 +263,93 @@ nav a:hover { color: var(--foreground-color); }
   align-items: flex-start;
   justify-content: space-between;
   gap: 0.5rem;
+}
+
+/* ── Tools grid ────────────────────────────────────────────────── */
+
+.tools-grid {
+  width: 100%;
+  max-width: 720px;
+  margin: 2rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  padding: 0 1rem;
+}
+
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--foreground-04alpha);
+  border: 1px solid var(--foreground-08alpha);
+  border-radius: var(--card-radius);
+  padding: 1.4rem 1.2rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background 150ms ease, border-color 150ms ease, transform 100ms ease;
+}
+
+.tool-card:hover {
+  background: var(--foreground-07alpha);
+  border-color: var(--foreground-20alpha);
+}
+
+.tool-card__icon {
+  display: flex;
+  justify-content: center;
+}
+
+.tool-card__icon img {
+  width: var(--tool-card-icon-width);
+  height: auto;
+  display: block;
+}
+
+.tool-card__game {
+  font-size: var(--font-size-tool-eyebrow);
+  letter-spacing: var(--letter-spacing-tool-label);
+  text-transform: var(--text-transform-uppercase);
+  opacity: 0.45;
+  margin-bottom: 0.25rem;
+}
+
+.tool-card__title {
+  font-size: var(--font-size-tool-title);
+  font-weight: 600;
+  color: var(--foreground-color);
+  margin-bottom: 0.5rem;
+}
+
+.tool-card__desc {
+  font-size: var(--font-size-tool-desc);
+  opacity: 0.6;
+  line-height: 1.55;
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+.tool-card__badge {
+  display: inline-block;
+  font-size: var(--font-size-tool-badge);
+  letter-spacing: var(--letter-spacing-tool-badge);
+  text-transform: var(--text-transform-uppercase);
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: var(--accent-green-15alpha);
+  color: var(--accent-green-color);
+  border: 1px solid var(--accent-green-25alpha);
+}
+
+@media (max-width: 640px) {
+  .tools-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .tool-card {
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto;
+  }
 }

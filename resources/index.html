@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
   <link rel="manifest" href="/site.webmanifest">
   <script defer src="https://cloud.umami.is/script.js" data-website-id="42ec36c1-25f1-4bc5-8963-ef3c47a90265"></script>
 </head>
+
 <body>
 
   <nav>
@@ -25,7 +27,9 @@
     <div class="logo-wrap">
       <img src="../images/logo.svg" alt="Chaotic Dice Studios">
     </div>
-    <div class="rule"><div class="rule-gem"></div></div>
+    <div class="rule">
+      <div class="rule-gem"></div>
+    </div>
     <p class="page-title">Free Resources</p>
 
     <!-- ── Tools grid ─────────────────────────────────────── -->
@@ -38,7 +42,8 @@
         <div class="tool-card__body">
           <p class="tool-card__game">Mantic Armada</p>
           <h2 class="tool-card__title">Armada Shot Calc</h2>
-          <p class="tool-card__desc">Step-by-step shooting modifier calculator. Determine the minimum die roll needed to hit enemy ships!</p>
+          <p class="tool-card__desc">Step-by-step shooting modifier calculator. Determine the minimum die roll needed to
+            hit enemy ships!</p>
           <span class="tool-card__badge">Free Web App</span>
         </div>
       </a>
@@ -48,98 +53,6 @@
 
   </main>
 
-  <style>
-    /*
-     * Scoped styles for the tools grid.
-     * These sit below your existing style.css rules so they inherit
-     * whatever variables / base styles you already have.
-     * Move them into style.css once you're happy with them.
-     */
-
-    .tools-grid {
-      width: 100%;
-      max-width: 720px;
-      margin: 2rem auto 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-      padding: 0 1rem;
-    }
-
-    .tool-card {
-      display: flex;
-      flex-direction: column;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px;
-      padding: 1.4rem 1.2rem;
-      text-decoration: none;
-      color: inherit;
-      transition: background 150ms ease, border-color 150ms ease, transform 100ms ease;
-    }
-
-    .tool-card:hover {
-      background: rgba(255,255,255,0.07);
-      border-color: rgba(255,255,255,0.18);
-    }
-
-    .tool-card__icon {
-      display: flex;
-      justify-content: center;
-    }
-
-    .tool-card__icon img {
-      width: 240px;
-      height: auto;
-      display: block;
-    }
-
-    .tool-card__game {
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      opacity: 0.45;
-      margin-bottom: 0.25rem;
-    }
-
-    .tool-card__title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #ffffff;
-      margin-bottom: 0.5rem;
-    }
-
-    .tool-card__desc {
-      font-size: 0.83rem;
-      opacity: 0.6;
-      line-height: 1.55;
-      flex: 1;
-      margin-bottom: 1rem;
-    }
-
-    .tool-card__badge {
-      display: inline-block;
-      font-size: 0.65rem;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 20px;
-      background: rgba(93,184,122,0.15);
-      color: #5db87a;
-      border: 1px solid rgba(93,184,122,0.25);
-    }
-
-    .tool-card__badge--soon {
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.35);
-      border-color: rgba(255,255,255,0.1);
-    }
-
-    .tool-card--coming-soon {
-      opacity: 0.4;
-      pointer-events: none;
-    }
-  </style>
-
 </body>
+
 </html>
