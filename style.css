@@ -330,7 +330,7 @@ nav a:hover { color: var(--foreground-color); }
   letter-spacing: var(--letter-spacing-tool-badge);
   text-transform: var(--text-transform-uppercase);
   padding: 3px 9px 3px 13px;
-  clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%);
   background: var(--foreground-color);
   color: var(--background-color);
   border: none;
