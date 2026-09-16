@@ -11,28 +11,19 @@
   --text-transform-uppercase: uppercase;
   --letter-spacing-title: 0.45em;
   --letter-spacing-navigation: 0.35em;
-
   --nav-padding: 1.25rem;
   --stage-top-gap: 2rem;
   --stage-padding: 2rem;
-
   /* Product grid */
   --card-radius: 14px;
   --product-card-scale: 0.96;
   --font-size-product-title: 0.85rem;
   --font-size-product-price: 0.95rem;
   --font-size-product-badge: 0.6rem;
-
   /* Extra alpha shades (tools grid, etc.) */
   --foreground-04alpha: rgba(255, 255, 255, 0.04);
   --foreground-07alpha: rgba(255, 255, 255, 0.07);
   --foreground-08alpha: rgba(255, 255, 255, 0.08);
-
-  /* Accent (success / free badge) */
-  --accent-green-color: #5db87a;
-  --accent-green-15alpha: rgba(93, 184, 122, 0.15);
-  --accent-green-25alpha: rgba(93, 184, 122, 0.25);
-
   /* Tools grid */
   --tool-card-icon-width: 240px;
   --font-size-tool-eyebrow: 0.65rem;
@@ -42,9 +33,7 @@
   --letter-spacing-tool-label: 0.12em;
   --letter-spacing-tool-badge: 0.09em;
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
   background: var(--background-color);
   color: var(--foreground-color);
@@ -54,7 +43,6 @@ body {
   align-items: center;
   font-family: system-ui, sans-serif;
 }
-
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -66,7 +54,6 @@ nav {
   backdrop-filter: blur(6px);
   z-index: 1;
 }
-
 nav a {
   color: var(--foreground-55alpha);
   text-decoration: none;
@@ -76,9 +63,7 @@ nav a {
   text-transform: var(--text-transform-uppercase);
   transition: color 0.2s;
 }
-
 nav a:hover { color: var(--foreground-color); }
-
 .stage {
   display: flex;
   flex-direction: column;
@@ -89,23 +74,19 @@ nav a:hover { color: var(--foreground-color); }
   position: relative;
   z-index: 0;
 }
-
 .logo-wrap img {
   width: min(560px, 85vw);
   height: auto;
   display: block;
   animation: breathe 4s ease-in-out infinite;
 }
-
 .logo-wrap a { display: block; }
-
 .page-title {
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-title);
   text-transform: var(--text-transform-uppercase);
 }
-
 .tagline {
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-bold);
@@ -113,7 +94,6 @@ nav a:hover { color: var(--foreground-color); }
   text-align: center;
   margin-top: 0.5rem;
 }
-
 .rule {
   display: flex;
   align-items: center;
@@ -121,14 +101,12 @@ nav a:hover { color: var(--foreground-color); }
   width: min(260px, 60vw);
   margin-top: 1rem;
 }
-
 .rule::before, .rule::after {
   content: '';
   flex: 1;
   height: 1px;
   background: var(--foreground-20alpha);
 }
-
 .rule-gem {
   width: 5px;
   height: 5px;
@@ -137,19 +115,15 @@ nav a:hover { color: var(--foreground-color); }
   opacity: 0.4;
   flex-shrink: 0;
 }
-
 @keyframes breathe {
-  0%, 100% { transform: scale(1);     opacity: 1; }
-  50%       { transform: scale(1.02); opacity: 0.85; }
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.02); opacity: 0.85; }
 }
-
 @keyframes fadein {
   from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
 /* ── Product grid ─────────────────────────────────────────────── */
-
 .product-grid {
   width: 100%;
   max-width: 760px;
@@ -159,7 +133,6 @@ nav a:hover { color: var(--foreground-color); }
   gap: 1.5rem;
   padding: 0 1rem;
 }
-
 .product-card {
   display: flex;
   flex-direction: column;
@@ -170,12 +143,10 @@ nav a:hover { color: var(--foreground-color); }
   color: inherit;
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
-
 .product-card:hover {
   transform: translateY(-4px);
   border-color: var(--foreground-55alpha);
 }
-
 /* Image */
 .product-card__img-wrap {
   width: 100%;
@@ -183,14 +154,12 @@ nav a:hover { color: var(--foreground-color); }
   overflow: hidden;
   border-radius: var(--card-radius) var(--card-radius) 0 0;
 }
-
 .product-card__img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-
 /* Body */
 .product-card__body {
   padding: 1rem;
@@ -199,7 +168,6 @@ nav a:hover { color: var(--foreground-color); }
   gap: 0.5rem;
   flex: 1;
 }
-
 .product-card__title {
   font-size: var(--font-size-product-title);
   font-weight: var(--font-weight-bold);
@@ -207,11 +175,9 @@ nav a:hover { color: var(--foreground-color); }
   line-height: 1.4;
   transition: color 0.2s;
 }
-
 .product-card:hover .product-card__title {
   color: var(--foreground-color);
 }
-
 /* Price + badge row */
 .product-card__footer {
   display: flex;
@@ -219,54 +185,46 @@ nav a:hover { color: var(--foreground-color); }
   justify-content: space-between;
   margin-top: auto;
 }
-
 .product-card__price {
   font-size: var(--font-size-product-price);
   font-weight: var(--font-weight-bold);
   color: var(--foreground-color);
 }
-
 .product-card__badge {
   font-size: var(--font-size-product-badge);
+  font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-navigation);
   text-transform: var(--text-transform-uppercase);
-  padding: 3px 9px;
-  border-radius: 20px;
-  background: var(--foreground-06alpha);
-  color: var(--foreground-55alpha);
-  border: 1px solid var(--foreground-20alpha);
+  padding: 3px 9px 3px 13px;
+  clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%);
+  background: var(--foreground-color);
+  color: var(--background-color);
+  border: none;
 }
-
 @media (max-width: 640px) {
-  .product-grid {
+.product-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
     padding: 0;
-  }
-
-  .product-card {
+}
+.product-card {
     max-width: 420px;
     width: 100%;
     margin: 0 auto;
-  }
 }
-
+}
 /* ── Featured product (home page) ────────────────────────────── */
-
 .product-card--featured {
   width: min(320px, 85vw);
   margin-top: 1rem;
 }
-
 .product-card__title-row {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 0.5rem;
 }
-
 /* ── Tools grid ────────────────────────────────────────────────── */
-
 .tools-grid {
   width: 100%;
   max-width: 720px;
@@ -276,7 +234,6 @@ nav a:hover { color: var(--foreground-color); }
   gap: 1rem;
   padding: 0 1rem;
 }
-
 .tool-card {
   display: flex;
   flex-direction: column;
@@ -288,23 +245,19 @@ nav a:hover { color: var(--foreground-color); }
   color: inherit;
   transition: background 150ms ease, border-color 150ms ease, transform 100ms ease;
 }
-
 .tool-card:hover {
   background: var(--foreground-07alpha);
   border-color: var(--foreground-20alpha);
 }
-
 .tool-card__icon {
   display: flex;
   justify-content: center;
 }
-
 .tool-card__icon img {
   width: var(--tool-card-icon-width);
   height: auto;
   display: block;
 }
-
 .tool-card__game {
   font-size: var(--font-size-tool-eyebrow);
   letter-spacing: var(--letter-spacing-tool-label);
@@ -312,14 +265,12 @@ nav a:hover { color: var(--foreground-color); }
   opacity: 0.45;
   margin-bottom: 0.25rem;
 }
-
 .tool-card__title {
   font-size: var(--font-size-tool-title);
   font-weight: 600;
   color: var(--foreground-color);
   margin-bottom: 0.5rem;
 }
-
 .tool-card__desc {
   font-size: var(--font-size-tool-desc);
   opacity: 0.6;
@@ -327,33 +278,30 @@ nav a:hover { color: var(--foreground-color); }
   flex: 1;
   margin-bottom: 1rem;
 }
-
 .tool-card__badge {
   display: inline-block;
   font-size: var(--font-size-tool-badge);
+  font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-tool-badge);
   text-transform: var(--text-transform-uppercase);
-  padding: 3px 9px;
-  border-radius: 20px;
-  background: var(--accent-green-15alpha);
-  color: var(--accent-green-color);
-  border: 1px solid var(--accent-green-25alpha);
+  padding: 3px 9px 3px 13px;
+  clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%);
+  background: var(--foreground-color);
+  color: var(--background-color);
+  border: none;
 }
-
 @media (max-width: 640px) {
-  .tools-grid {
+.tools-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
     padding: 0 0.5rem;
-  }
-
-  .tool-card {
+}
+.tool-card {
     max-width: 420px;
     width: 100%;
     margin: 0 auto;
-  }
-
-  .tool-card__icon img {
+}
+.tool-card__icon img {
     width: 140px;
-  }
+}
 }
