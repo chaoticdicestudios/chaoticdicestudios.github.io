@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+
 :root {
   --background-color: #0a0a0a;
   --background-85alpha: rgba(10, 10, 10, 0.85);
@@ -11,6 +13,13 @@
   --text-transform-uppercase: uppercase;
   --letter-spacing-title: 0.45em;
   --letter-spacing-navigation: 0.35em;
+  --font-family-tagline-lead: 'Oswald', sans-serif;
+  --font-size-tagline-lead: clamp(0.95rem, 2.3vw, 1.15rem);
+  --font-weight-tagline-lead: 700;
+  --letter-spacing-tagline-lead: 0.05em;
+  --font-family-tagline-credit: 'Oswald', sans-serif;
+  --font-size-tagline-credit: clamp(0.8rem, 1.7vw, 0.95rem);
+  --font-weight-tagline-credit: 400;
   --nav-padding: 1.25rem;
   --stage-top-gap: 2rem;
   --stage-padding: 2rem;
@@ -88,11 +97,25 @@ nav a:hover { color: var(--foreground-color); }
   text-transform: var(--text-transform-uppercase);
 }
 .tagline {
-  font-size: var(--font-size-title);
-  font-weight: var(--font-weight-bold);
-  opacity: 0.6;
   text-align: center;
   margin-top: 0.5rem;
+}
+.tagline__lead {
+  display: block;
+  font-family: var(--font-family-tagline-lead);
+  font-size: var(--font-size-tagline-lead);
+  font-weight: var(--font-weight-tagline-lead);
+  letter-spacing: var(--letter-spacing-tagline-lead);
+  text-transform: var(--text-transform-uppercase);
+  color: var(--foreground-color);
+}
+.tagline__credit {
+  display: block;
+  font-family: var(--font-family-tagline-credit);
+  font-size: var(--font-size-tagline-credit);
+  font-weight: var(--font-weight-tagline-credit);
+  color: var(--foreground-color);
+  margin-top: 0.35rem;
 }
 .rule {
   display: flex;
