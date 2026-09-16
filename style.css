@@ -26,7 +26,6 @@
   /* Product grid */
   --card-radius: 14px;
   --product-card-scale: 0.96;
-  --font-size-product-title: 0.85rem;
   --font-size-product-price: 0.95rem;
   --font-size-product-badge: 0.6rem;
   /* Extra alpha shades (tools grid, etc.) */
@@ -190,9 +189,6 @@ nav a:hover { color: var(--foreground-color); }
   flex-direction: column;
   gap: 0.5rem;
   flex: 1;
-}
-.product-card:hover {
-  color: var(--foreground-color);
 }
 /* Price + badge row */
 .product-card__footer {
