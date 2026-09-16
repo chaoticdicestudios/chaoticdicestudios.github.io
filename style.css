@@ -191,14 +191,7 @@ nav a:hover { color: var(--foreground-color); }
   gap: 0.5rem;
   flex: 1;
 }
-.product-card__title {
-  font-size: var(--font-size-product-title);
-  font-weight: var(--font-weight-bold);
-  color: var(--foreground-55alpha);
-  line-height: 1.4;
-  transition: color 0.2s;
-}
-.product-card:hover .product-card__title {
+.product-card:hover {
   color: var(--foreground-color);
 }
 /* Price + badge row */
@@ -240,12 +233,6 @@ nav a:hover { color: var(--foreground-color); }
 .product-card--featured {
   width: min(320px, 85vw);
   margin-top: 1rem;
-}
-.product-card__title-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.5rem;
 }
 /* ── Tools grid ────────────────────────────────────────────────── */
 .tools-grid {
