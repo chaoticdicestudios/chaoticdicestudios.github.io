@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Permanent+Marker&display=swap');
 
 :root {
   --background-color: #0a0a0a;
@@ -23,6 +23,7 @@
   --nav-padding: 1.25rem;
   --stage-top-gap: 2rem;
   --stage-padding: 2rem;
+  --logo-width: min(560px, 85vw);
   /* Product grid */
   --card-radius: 14px;
   --product-card-scale: 0.96;
@@ -83,7 +84,7 @@ nav a:hover { color: var(--foreground-color); }
   z-index: 0;
 }
 .logo-wrap img {
-  width: min(560px, 85vw);
+  width: var(--logo-width);
   height: auto;
   display: block;
   animation: breathe 4s ease-in-out infinite;
@@ -120,7 +121,7 @@ nav a:hover { color: var(--foreground-color); }
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  width: min(260px, 60vw);
+  width: var(--logo-width);
   margin-top: 1rem;
 }
 .rule::before, .rule::after {
@@ -229,6 +230,44 @@ nav a:hover { color: var(--foreground-color); }
 .product-card--featured {
   width: min(320px, 85vw);
   margin-top: 1rem;
+}
+/* ── Creators ─────────────────────────────────────────────────── */
+.creators {
+  width: min(420px, 85vw);
+  margin-top: 1rem;
+}
+.creators__heading {
+  font-family: var(--font-family-tagline-lead);
+  font-size: var(--font-size-tagline-lead);
+  font-weight: var(--font-weight-tagline-lead);
+  letter-spacing: var(--letter-spacing-tagline-lead);
+  text-transform: var(--text-transform-uppercase);
+  color: var(--foreground-color);
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+.creators__person {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.creators__name {
+  font-family: 'Permanent Marker', cursive;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  color: var(--foreground-color);
+  flex-shrink: 0;
+}
+.creators__divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--foreground-20alpha);
+  flex-shrink: 0;
+}
+.creators__bio {
+  font-family: system-ui, sans-serif;
+  font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+  line-height: 1.55;
+  color: var(--foreground-55alpha);
 }
 /* ── Tools grid ────────────────────────────────────────────────── */
 .tools-grid {
