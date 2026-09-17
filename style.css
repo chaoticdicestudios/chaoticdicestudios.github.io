@@ -250,6 +250,7 @@ nav a:hover { color: var(--foreground-color); }
   display: flex;
   align-items: center;
   gap: 0.9rem;
+  margin-bottom: 2rem;
 }
 .creators__name {
   font-family: 'Permanent Marker', cursive;
@@ -268,6 +269,9 @@ nav a:hover { color: var(--foreground-color); }
   font-size: clamp(0.7rem, 1.8vw, 0.8rem);
   line-height: 1.55;
   color: var(--foreground-55alpha);
+}
+.creators__bio a:link {
+  color: var(--foreground-color);
 }
 /* ── Tools grid ────────────────────────────────────────────────── */
 .tools-grid {
