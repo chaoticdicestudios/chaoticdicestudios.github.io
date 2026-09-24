@@ -35,6 +35,7 @@
   --foreground-08alpha: rgba(255, 255, 255, 0.08);
   /* Tools grid */
   --tool-card-icon-width: 240px;
+  --tool-card-icon-height: 160px;
   --font-size-tool-eyebrow: 0.65rem;
   --font-size-tool-title: 1.1rem;
   --font-size-tool-desc: 0.83rem;
@@ -284,6 +285,7 @@ nav a:hover { color: var(--foreground-color); }
   padding: 0 1rem;
 }
 .tool-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: var(--foreground-04alpha);
@@ -300,19 +302,24 @@ nav a:hover { color: var(--foreground-color); }
 }
 .tool-card__icon {
   display: flex;
+  align-items: center;
   justify-content: center;
+  height: var(--tool-card-icon-height);
+  margin-bottom: 1rem;
 }
 .tool-card__icon img {
-  width: var(--tool-card-icon-width);
+  max-width: var(--tool-card-icon-width);
+  max-height: 100%;
+  width: auto;
   height: auto;
+  object-fit: contain;
   display: block;
 }
-.tool-card__game {
-  font-size: var(--font-size-tool-eyebrow);
-  letter-spacing: var(--letter-spacing-tool-label);
-  text-transform: var(--text-transform-uppercase);
-  opacity: 0.45;
-  margin-bottom: 0.25rem;
+.tool-card__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
 }
 .tool-card__title {
   font-size: var(--font-size-tool-title);
@@ -324,10 +331,10 @@ nav a:hover { color: var(--foreground-color); }
   font-size: var(--font-size-tool-desc);
   opacity: 0.6;
   line-height: 1.55;
-  flex: 1;
-  margin-bottom: 1rem;
 }
 .tool-card__badge {
+  align-self: flex-end;
+  margin-bottom: 0.75rem;
   display: inline-block;
   font-size: var(--font-size-tool-badge);
   font-weight: var(--font-weight-bold);
@@ -350,7 +357,10 @@ nav a:hover { color: var(--foreground-color); }
     width: 100%;
     margin: 0 auto;
 }
+.tool-card__icon {
+    height: 120px;
+}
 .tool-card__icon img {
-    width: 140px;
+    max-width: 140px;
 }
 }
